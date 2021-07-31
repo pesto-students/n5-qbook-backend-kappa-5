@@ -6,6 +6,7 @@
  */
  var jwt = require('jsonwebtoken');
 
+ 
 module.exports = {
   
   login: async function (req, res) {
@@ -22,22 +23,42 @@ module.exports = {
     // set a cookie on the client side that they can't modify unless they sign out (just for web apps)
     await Users.updateOne({email:user.email}).set({accessToken:token});
     
-    // res.cookie('sailsjwt', token, {
-    //     signed: true,
-    //     domain: 'http://localhost:1337/', // always use this in production to whitelist your domain
-    //     maxAge: sails.config.jwtExpires
-    // })
+    res.cookie('sailsjwt', token, {
+        signed: true,
+        // domain: '.yourdomain.com', // always use this in production to whitelist your domain
+        maxAge: sails.config.jwtExpires
+    })
     var data = {
         result:user,
         token:token
     }
-    res.forbidden();
     // provide the token to the client in case they want to store it locally to use in the header (eg mobile/desktop apps)
     return res.ok(data)
 },
 
 updateConfig: async function(req,res){
-   return res.ok(req.user);
+   let user = req.user;
+   var setting = await Setting.findOne({userId:user.id});
+   if(!setting){
+     var data = req.body;
+     data.userId = user.id;  
+     setting = await Setting.create(req.body).fetch();
+   }else{
+    setting = await Setting.updateOne({userId:user.id}).set(req.body);
+   } 
+   return res.ok(setting);
+
+},
+
+dashboard: async function(req,res){
+    let user = req.user;
+    var detail = await Users.findOne({id:user.id});
+    var setting = await Setting.findOne({userId:user.id});
+
+    return res.ok({
+        'record':detail,
+        'setting':setting,
+    });
 }
 
 

@@ -151,9 +151,9 @@ module.exports = {
       allowOrigins: [
         'http://localhost',
         'http://localhost:3000'
-      ]
+      ],
     },
-
+   
   },
 
 
@@ -252,8 +252,8 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     onlyAllowOrigins: [
-      'https://localhost',
-      'https://localhost:3000',
+      'http://localhost',
+      'http://localhost:3000',
     ],
 
 

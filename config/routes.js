@@ -21,7 +21,8 @@ module.exports.routes = {
 
   '/': { view: 'pages/homepage' },
   'POST /api/v1/user/login':'UsersController.login',
-  'POST /api/v1/user/updateConfig':'UsersController.updateConfig'
+  'POST /api/v1/user/updateConfig':'UsersController.updateConfig',
+  'GET /api/v1/user/dashboard':'UsersController.dashboard',
 
 
   /***************************************************************************
