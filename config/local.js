@@ -16,6 +16,7 @@ module.exports = {
   jwtExpires:604800,
   RAZOR_KEY_ID:'rzp_test_Mj02y5458xshqx',
   RAZOR_SECRET_KEY:'tTmy6uCn0zlcRQM3nP7i2Fbd',
-  FRONT_END_URL:'http://localhost:3000/'
+  FRONT_END_URL:'http://localhost:3000/',
+  TIMEZONE:'Asia/Kolkata|MMT IST +0630|-5l.a -5u -6u|012121|-2zOtl.a 1r2LP.a 1un0 HB0 7zX0|15e6'
 
 };

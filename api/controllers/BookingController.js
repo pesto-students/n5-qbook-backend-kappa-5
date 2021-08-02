@@ -21,8 +21,9 @@ checkAvailability:  async function(req,res){
     }
     const Config = await Setting.findOne({userId:qrCode.userId});
     const format = 'YYYY-MM-DD HH:mm:ss';
-    const currentDate = moment().format('YYYY-MM-DD');
-    const currentTime = moment().format(format);
+    
+    const currentDate = moment().utcOffset(330).format('YYYY-MM-DD');
+    const currentTime = moment().utcOffset(330).format(format);
     let checktime = false;
     let finalCheck = false;  
     let message = '';   
@@ -30,7 +31,7 @@ checkAvailability:  async function(req,res){
         let getStart = currentDate+' '+slot.start;
         let getEnd = currentDate+' '+slot.end;
         message += 'Start Time:-'+slot.start+' End Time:-'+slot.end+' \n';
-        checktime = moment(currentTime).isBetween(getStart,getEnd);
+        checktime = moment(currentTime).utcOffset(330).isBetween(getStart,getEnd);
         if(checktime){
             finalCheck = true;
         }
