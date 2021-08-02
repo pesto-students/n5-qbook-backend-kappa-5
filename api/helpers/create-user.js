@@ -43,7 +43,7 @@ module.exports = {
 
 
   fn: async function (inputs,exits) {
-     console.log(inputs);
+
 		if (inputs.googleAuthId) {
 		   var user = await Users.create(inputs)
        .intercept('E_UNIQUE', () => 'emailAlreadyInUse')
@@ -52,7 +52,7 @@ module.exports = {
        return exits.success(user);
 		}
 		else {
-			return exits.invalid('Missing password.');
+			return exits.invalid('Missing Auth ID.');
 		}
   }
 

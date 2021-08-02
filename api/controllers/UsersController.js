@@ -4,7 +4,8 @@
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
- var jwt = require('jsonwebtoken');
+ const jwt = require('jsonwebtoken');
+ const crypto = require('crypto');
 
  
 module.exports = {
@@ -37,10 +38,10 @@ module.exports = {
 },
 
 updateConfig: async function(req,res){
-   let user = req.user;
-   var setting = await Setting.findOne({userId:user.id});
+   const user = req.user;
+   let setting = await Setting.findOne({userId:user.id});
    if(!setting){
-     var data = req.body;
+     let data = req.body;
      data.userId = user.id;  
      setting = await Setting.create(req.body).fetch();
    }else{
@@ -59,6 +60,24 @@ dashboard: async function(req,res){
         'record':detail,
         'setting':setting,
     });
+},
+
+generateQRCode: async function(req,res){
+    const user = req.user;
+    let data = {};
+    const hash = crypto.randomBytes(30).toString('hex');
+    let qrCode = await QRCode.findOne({userId:user.id});
+    if(!qrCode){
+        data.userId = user.id;
+        data.uuid = hash;
+        data.status = 1;   
+        qrCode = await QRCode.create(data).fetch();
+      }else{
+        qrCode = await QRCode.updateOne({userId:user.id}).set({uuid:hash});
+      } 
+      const url = sails.config.FRONT_END_URL+'qrcode?uuid='+qrCode.uuid;
+      return res.ok({'url':url});
+
 }
 
 
