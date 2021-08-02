@@ -394,7 +394,8 @@ module.exports = {
     //--------------------------------------------------------------------------
   },
   jwtSecret:'xStmbyc066BOFn40gIr29y09Ud94z1P7',
-  jwtExpires:604800
+  jwtExpires:604800,
+  FRONT_END_URL:'http://localhost:3000/'
 
 
 
