@@ -5,7 +5,11 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 const moment = require('moment');
-var crypto = require('crypto');
+let crypto = require('crypto');
+const fs = require('fs');
+let path = require('path');
+const ejs = require('ejs');
+const pdf = require('html-pdf');
 
 module.exports = {
   
@@ -91,14 +95,39 @@ checkAvailability:  async function(req,res){
         if(!searchToken){
 
         }
-
         let BookingDetail = await Booking.findOne({searchToken:searchToken});
-        let UpdateBooking = await Booking.updateOne({id:BookingDetail.id}).set({userComment:req.body.prescription,status:2,consultTime:moment().format('YYYY-MM-DD HH:mm:ss')});
+        
+        //creating pdf from ejs
+        const UserData = await Users.findOne({id:BookingDetail.userId});
+        const CustomerData = await Customer.findOne({id:BookingDetail.customerId});
+        const UserConfig = await Setting.findOne({userId:BookingDetail.userId});
+        const data = {
+            customer:CustomerData,
+            User:UserData,
+            Setting:UserConfig,
+            Content:req.body.prescription
+        }
+
+        const filePathName = path.resolve('.','views','pages','invoice.ejs');
+        const htmlString = fs.readFileSync(filePathName).toString();
+        let  options = { format: 'Letter', };
+        const ejsData = ejs.render(htmlString, data);
+        let finalresponse = await pdf.create(ejsData,options).toFile('./assets/uploads/generatedfile.pdf',(err, response) => {
+            if (err) return console.log(err);
+            return response;
+        });
+         let fileLoc = await sails.helpers.uploadFile.with({
+             data:'./assets/uploads/generatedfile.pdf'
+         });
+         fs.unlinkSync('./assets/uploads/generatedfile.pdf');
+         let UpdateBooking = await Booking.updateOne({id:BookingDetail.id}).set({userComment:req.body.prescription,status:2,consultTime:moment().format('YYYY-MM-DD HH:mm:ss'),file:fileLoc.Location});
+         await sails.helpers.sendMessage.with({
+             file:fileLoc.Location,
+             mobile:CustomerData.mobileNum
+         });
         res.ok(UpdateBooking);
-
-
     } 
-
+ 
 
 };
 
