@@ -80,7 +80,7 @@ checkAvailability:  async function(req,res){
     let BookingDetail = await Booking.create({
         'customerId':CustomerRecord.id,
         'userId':qrCode.userId,
-        'bookingDateTime':moment().format('YYYY-MM-DD HH:mm:ss'),
+        'bookingDateTime':new Date().toISOString(),
         'status':1,
         'searchToken':crypto.randomBytes(50).toString('hex'),
     }).fetch();
@@ -126,6 +126,9 @@ checkAvailability:  async function(req,res){
              mobile:CustomerData.mobileNum
          });
         res.ok(UpdateBooking);
+    },
+    BookingListing: async function(req,res){
+
     } 
  
 
