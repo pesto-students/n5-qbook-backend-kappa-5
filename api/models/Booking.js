@@ -6,10 +6,8 @@
  */
 
 module.exports = {
-  tableName:'Booking',
+
   attributes: {
-
-
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
