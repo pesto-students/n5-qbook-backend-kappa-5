@@ -395,8 +395,8 @@ module.exports = {
   },
   jwtSecret:'xStmbyc066BOFn40gIr29y09Ud94z1P7',
   jwtExpires:604800,
-  FRONT_END_URL:'http://localhost:3000/'
-
+  FRONT_END_URL:'http://localhost:3000/',
+  TIMEZONE:'Asia/Kolkata|MMT IST +0630|-5l.a -5u -6u|012121|-2zOtl.a 1r2LP.a 1un0 HB0 7zX0|15e6'
 
 
 };
