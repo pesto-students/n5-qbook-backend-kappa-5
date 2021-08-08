@@ -17,6 +17,11 @@ module.exports = {
   RAZOR_KEY_ID:'rzp_test_Mj02y5458xshqx',
   RAZOR_SECRET_KEY:'tTmy6uCn0zlcRQM3nP7i2Fbd',
   FRONT_END_URL:'http://localhost:3000/',
-  TIMEZONE:'Asia/Kolkata|MMT IST +0630|-5l.a -5u -6u|012121|-2zOtl.a 1r2LP.a 1un0 HB0 7zX0|15e6'
+  AWS_KEY_ID:'AKIAWYXOX7JEZWQ6EU5O',
+  AWS_SECRET_KEY_ID:'pCko6rauwfT+Ghu1d3vcU7vwWPHT7cQH/K6ApCQq',
+  AWS_BUCKET:'qbook-patient-invoice',
+  TWILLIO_ACCOUNT_ID:'ACe9cae4c795c89b6bf172788445afa4cd',
+  TWILLIO_AUTH_TOKEN:'f336692611e8fa0df285f194332372d8',
 
+  
 };
