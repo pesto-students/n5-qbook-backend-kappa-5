@@ -9,38 +9,35 @@
  */
 
 module.exports.routes = {
+  /***************************************************************************
+   *                                                                          *
+   * Make the view located at `views/homepage.ejs` your home page.            *
+   *                                                                          *
+   * (Alternatively, remove this and add an `index.html` file in your         *
+   * `assets` directory)                                                      *
+   *                                                                          *
+   ***************************************************************************/
+
+  "/": { view: "pages/homepage" },
+  "POST /api/v1/user/login": "UsersController.login",
+  "POST /api/v1/user/updateConfig": "UsersController.updateConfig",
+  "GET /api/v1/user/dashboard": "UsersController.dashboard",
+  "GET /api/v1/user/generate-code": "UsersController.generateQRCode",
+  "GET /api/v1/booking/checkAvailability":
+    "BookingController.checkAvailability",
+  "POST /api/v1/booking/create": "BookingController.createNewBooking",
+  "POST /api/v1/booking/addPrescription":
+    "BookingController.createPrescription",
+  "GET /api/v1/booking/list": "BookingController.BookingListing",
 
   /***************************************************************************
-  *                                                                          *
-  * Make the view located at `views/homepage.ejs` your home page.            *
-  *                                                                          *
-  * (Alternatively, remove this and add an `index.html` file in your         *
-  * `assets` directory)                                                      *
-  *                                                                          *
-  ***************************************************************************/
-
-  '/': { view: 'pages/homepage' },
-  'POST /api/v1/user/login':'UsersController.login',
-  'POST /api/v1/user/updateConfig':'UsersController.updateConfig',
-  'GET /api/v1/user/dashboard':'UsersController.dashboard',
-  'GET /api/v1/user/generate-code':'UsersController.generateQRCode',
-  'GET /api/v1/booking/checkAvailability':'BookingController.checkAvailability',
-  'POST /api/v1/booking/create': 'BookingController.createNewBooking',
-  'POST /api/v1/booking/addPrescription': 'BookingController.createPrescription',
-  'GET /api/v1/booking/list': 'BookingController.BookingListing',
-
-
-
-  /***************************************************************************
-  *                                                                          *
-  * More custom routes here...                                               *
-  * (See https://sailsjs.com/config/routes for examples.)                    *
-  *                                                                          *
-  * If a request to a URL doesn't match any of the routes in this file, it   *
-  * is matched against "shadow routes" (e.g. blueprint routes).  If it does  *
-  * not match any of those, it is matched against static assets.             *
-  *                                                                          *
-  ***************************************************************************/
-
-
+   *                                                                          *
+   * More custom routes here...                                               *
+   * (See https://sailsjs.com/config/routes for examples.)                    *
+   *                                                                          *
+   * If a request to a URL doesn't match any of the routes in this file, it   *
+   * is matched against "shadow routes" (e.g. blueprint routes).  If it does  *
+   * not match any of those, it is matched against static assets.             *
+   *                                                                          *
+   ***************************************************************************/
 };

@@ -9,31 +9,30 @@
  *   https://sailsjs.com/anatomy/tasks/config/uglify.js
  *
  */
-module.exports = function(grunt) {
-
-  grunt.config.set('uglify', {
+module.exports = function (grunt) {
+  grunt.config.set("uglify", {
     dist: {
-      src: ['.tmp/public/concat/production.js'],
-      dest: '.tmp/public/min/production.min.js'
+      src: [".tmp/public/concat/production.js"],
+      dest: ".tmp/public/min/production.min.js",
     },
     options: {
       mangle: {
         reserved: [
-          'AsyncFunction',
-          'SailsSocket',
-          'Promise',
-          'File',
-          'FileList',
-          'FormData',
-          'Location',
-          'RttcRefPlaceholder',
+          "AsyncFunction",
+          "SailsSocket",
+          "Promise",
+          "File",
+          "FileList",
+          "FormData",
+          "Location",
+          "RttcRefPlaceholder",
         ],
-        keep_fnames: true//eslint-disable-line
+        keep_fnames: true, //eslint-disable-line
       },
       compress: {
-        keep_fnames: true//eslint-disable-line
-      }
-    }
+        keep_fnames: true, //eslint-disable-line
+      },
+    },
   });
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -59,6 +58,4 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-contrib-uglify');
   // ```
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 };
-

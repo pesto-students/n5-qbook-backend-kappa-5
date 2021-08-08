@@ -15,14 +15,14 @@ module.exports.policies = {
    * (`true` allows public access)                                            *
    *                                                                          *
    ***************************************************************************/
-  '*': true,
+  "*": true,
   UsersController: {
-    '*': 'isAuthenticated',
-		login: true,
+    "*": "isAuthenticated",
+    login: true,
   },
   BookingController: {
-    '*': 'isAuthenticated',
-		checkAvailability: true,
+    "*": "isAuthenticated",
+    checkAvailability: true,
     createNewBooking: true,
   },
 };

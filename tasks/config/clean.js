@@ -9,20 +9,19 @@
  *   https://sailsjs.com/anatomy/tasks/config/clean.js
  *
  */
-module.exports = function(grunt) {
-
-  grunt.config.set('clean', {
-    dev: ['.tmp/public/**'],
-    build: ['www'],
+module.exports = function (grunt) {
+  grunt.config.set("clean", {
+    dev: [".tmp/public/**"],
+    build: ["www"],
     afterBuildProd: [
-      'www/concat',
-      'www/min',
-      'www/hash',
-      'www/js',
-      'www/styles',
-      'www/templates',
-      'www/dependencies'
-    ]
+      "www/concat",
+      "www/min",
+      "www/hash",
+      "www/js",
+      "www/styles",
+      "www/templates",
+      "www/dependencies",
+    ],
   });
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -48,5 +47,4 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-contrib-clean');
   // ```
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 };

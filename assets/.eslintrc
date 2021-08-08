@@ -16,9 +16,7 @@
   // (See .eslintrc in the root directory of this Sails app for more context.)
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  "extends": [
-    "../.eslintrc"
-  ],
+  "extends": ["../.eslintrc"],
 
   "env": {
     "browser": true,
@@ -31,7 +29,6 @@
   },
 
   "globals": {
-
     // Allow any window globals you're relying on here; e.g.
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     "SAILS_LOCALS": true,
@@ -57,5 +54,4 @@
     // simply be removed, since it'd be redundant.)
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   }
-
 }
