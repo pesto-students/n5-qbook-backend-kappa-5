@@ -21,6 +21,8 @@ module.exports = {
               notes:'Appointment',
           }
 
+          console.log('instance',instance);
+
           instance.orders.create(requestAttr).then((data) => {
            return res.ok(data);
           }).catch((error) => {
