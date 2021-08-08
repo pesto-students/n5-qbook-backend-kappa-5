@@ -395,8 +395,10 @@ module.exports = {
   },
   jwtSecret:'xStmbyc066BOFn40gIr29y09Ud94z1P7',
   jwtExpires:604800,
-  FRONT_END_URL:'http://localhost:3000/'
-
+  FRONT_END_URL:'http://localhost:3000/',
+  AWS_KEY_ID:'AKIAWYXOX7JEZWQ6EU5O',
+  AWS_SECRET_KEY_ID:'pCko6rauwfT+Ghu1d3vcU7vwWPHT7cQH/K6ApCQq',
+  AWS_BUCKET:'qbook-patient-invoice'
 
 
 };
