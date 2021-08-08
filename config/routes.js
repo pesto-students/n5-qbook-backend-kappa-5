@@ -24,7 +24,11 @@ module.exports.routes = {
   'POST /api/v1/user/updateConfig':'UsersController.updateConfig',
   'GET /api/v1/user/dashboard':'UsersController.dashboard',
   'GET /api/v1/user/generate-code':'UsersController.generateQRCode',
-  'GET /api/v1/booking/checkAvailability':'BookingController.checkAvailability'
+  'GET /api/v1/booking/checkAvailability':'BookingController.checkAvailability',
+  'POST /api/v1/booking/create': 'BookingController.createNewBooking',
+  'POST /api/v1/booking/addPrescription': 'BookingController.createPrescription',
+  'GET /api/v1/booking/list': 'BookingController.BookingListing',
+
 
 
   /***************************************************************************
