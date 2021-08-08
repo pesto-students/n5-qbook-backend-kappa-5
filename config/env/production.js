@@ -395,10 +395,14 @@ module.exports = {
   },
   jwtSecret:'xStmbyc066BOFn40gIr29y09Ud94z1P7',
   jwtExpires:604800,
+  RAZOR_KEY_ID:'rzp_test_Mj02y5458xshqx',
+  RAZOR_SECRET_KEY:'tTmy6uCn0zlcRQM3nP7i2Fbd',
   FRONT_END_URL:'http://localhost:3000/',
   AWS_KEY_ID:'AKIAWYXOX7JEZWQ6EU5O',
   AWS_SECRET_KEY_ID:'pCko6rauwfT+Ghu1d3vcU7vwWPHT7cQH/K6ApCQq',
-  AWS_BUCKET:'qbook-patient-invoice'
+  AWS_BUCKET:'qbook-patient-invoice',
+  TWILLIO_ACCOUNT_ID:'ACe9cae4c795c89b6bf172788445afa4cd',
+  TWILLIO_AUTH_TOKEN:'f336692611e8fa0df285f194332372d8',
 
 
 };
