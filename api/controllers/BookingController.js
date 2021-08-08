@@ -128,6 +128,11 @@ checkAvailability:  async function(req,res){
         res.ok(UpdateBooking);
     },
     BookingListing: async function(req,res){
+       const user = req.user;
+       let filter = {};
+       const status = parseInt(req.query.status);
+       let bookingList = await Booking.find({status:status,userId:user.id});
+       res.ok({data:bookingList}); 
 
     } 
  
