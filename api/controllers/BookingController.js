@@ -47,7 +47,7 @@ checkAvailability:  async function(req,res){
 
     const RazorPayOrderID = await sails.helpers.createOrder.with({amount:Config.fees,currency:'INR',receipt:'receipt#'+randomValue,notes:'Appointment'});
 
-    return res.ok({data:{orderId:RazorPayOrderID.id},message:'"Booking Availabile"'});
+    return res.ok({data:{orderId:RazorPayOrderID.id,fees:Config.fees},message:'"Booking Availabile"'});
 
     },
     createNewBooking: async function(req,res){
