@@ -75,6 +75,15 @@ generateQRCode: async function(req,res){
       }else{
         qrCode = await QRCode.updateOne({userId:user.id}).set({uuid:hash});
       } 
+      const message = {
+        data: {
+          score: '850',
+          time: '2:45'
+        },
+        token: 'e41rJP7ZwinbWjwqdaSyqw:APA91bGVE03bHzKDw1rMIYdqJp9SJHTiVKanFyv0rzkZBWIBFsjcgxkGv-lIMMZl8KC3G9miivIGrfaoyyJTpjHdwsFyOEfG-tdlgDIBnBKwSAzA61yNJOXuVJU1A2U8JJ52XESjpcFz'
+      };
+      //const notification = await sails.helpers.sendNotification.with(message);
+      
       const url = sails.config.FRONT_END_URL+'qrcode?uuid='+qrCode.uuid;
       return res.ok({'url':url});
 
