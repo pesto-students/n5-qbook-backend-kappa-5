@@ -14,12 +14,12 @@ const pdf = require("html-pdf");
 module.exports = {
   checkAvailability: async function (req, res) {
     const uuid = req.query.uuid;
-    if (!uuid) {
-      return res.badRequest("please provide correct uuid");
+    if(!uuid){
+    return res.badRequest({status:false,msg:'please provide correct uuid',data:{}});
     }
-    const qrCode = await QRCode.findOne({ uuid: uuid });
-    if (!qrCode) {
-      return res.badRequest("uuid is expired already");
+    const qrCode = await QRCode.findOne({uuid:uuid});
+    if(!qrCode){
+    return res.badRequest({status:false,msg:'uuid is expired already',data:{}});
     }
     const Config = await Setting.findOne({ userId: qrCode.userId });
     const format = "YYYY-MM-DD HH:mm:ss";
@@ -38,19 +38,14 @@ module.exports = {
         if (checktime) {
           finalCheck = true;
         }
-      });
-    if (!finalCheck) {
-      return res.badRequest("Please book appointment between " + message);
+    });
+    if(!finalCheck){
+        return res.badRequest({status:false,msg:'Please book appointment between '+message,data:{}});
     }
 
     const randomValue = Math.floor(Math.random() * 90000) + 10000;
 
-    const RazorPayOrderID = await sails.helpers.createOrder.with({
-      amount: Config.fees,
-      currency: "INR",
-      receipt: "receipt#" + randomValue,
-      notes: "Appointment",
-    });
+    return res.ok({status:true,data:{orderId:RazorPayOrderID.id,fees:Config.fees},msg:'"Booking Availabile"'});
 
     return res.ok({
       data: { orderId: RazorPayOrderID.id },
@@ -94,59 +89,54 @@ module.exports = {
       status: 1,
       searchToken: crypto.randomBytes(50).toString("hex"),
     }).fetch();
+ 
+    res.ok({status:true,msg:'booking created successfully',data:BookingDetail});
 
-    res.ok("booking created successfully");
-  },
-  createPrescription: async function (req, res) {
-    const searchToken = req.body.searchToken;
-    if (!searchToken) {
-    }
-    let BookingDetail = await Booking.findOne({ searchToken: searchToken });
 
-    //creating pdf from ejs
-    const UserData = await Users.findOne({ id: BookingDetail.userId });
-    const CustomerData = await Customer.findOne({
-      id: BookingDetail.customerId,
-    });
-    const UserConfig = await Setting.findOne({ userId: BookingDetail.userId });
-    const data = {
-      customer: CustomerData,
-      User: UserData,
-      Setting: UserConfig,
-      Content: req.body.prescription,
-    };
+        
+    },
+    createPrescription: async function(req,res){
+        const searchToken = req.body.searchToken;
+        if(!searchToken){
 
-    const filePathName = path.resolve(".", "views", "pages", "invoice.ejs");
-    const htmlString = fs.readFileSync(filePathName).toString();
-    let options = { format: "Letter" };
-    const ejsData = ejs.render(htmlString, data);
-    let finalresponse = await pdf
-      .create(ejsData, options)
-      .toFile("./assets/uploads/generatedfile.pdf", (err, response) => {
-        if (err) return console.log(err);
-        return response;
-      });
-    let fileLoc = await sails.helpers.uploadFile.with({
-      data: "./assets/uploads/generatedfile.pdf",
-    });
-    fs.unlinkSync("./assets/uploads/generatedfile.pdf");
-    let UpdateBooking = await Booking.updateOne({ id: BookingDetail.id }).set({
-      userComment: req.body.prescription,
-      status: 2,
-      consultTime: moment().format("YYYY-MM-DD HH:mm:ss"),
-      file: fileLoc.Location,
-    });
-    await sails.helpers.sendMessage.with({
-      file: fileLoc.Location,
-      mobile: CustomerData.mobileNum,
-    });
-    res.ok(UpdateBooking);
-  },
+        }
+        let BookingDetail = await Booking.findOne({searchToken:searchToken});
+        
+        //creating pdf from ejs
+        const UserData = await Users.findOne({id:BookingDetail.userId});
+        const CustomerData = await Customer.findOne({id:BookingDetail.customerId});
+        const UserConfig = await Setting.findOne({userId:BookingDetail.userId});
+        const data = {
+            customer:CustomerData,
+            User:UserData,
+            Setting:UserConfig,
+            Content:req.body.prescription
+        }
+
+        const filePathName = path.resolve('.','views','pages','invoice.ejs');
+        const htmlString = fs.readFileSync(filePathName).toString();
+        let  options = { format: 'Letter', };
+        const ejsData = ejs.render(htmlString, data);
+        let finalresponse = await pdf.create(ejsData,options).toFile('./assets/uploads/generatedfile.pdf',(err, response) => {
+            if (err) return console.log(err);
+            return response;
+        });
+         let fileLoc = await sails.helpers.uploadFile.with({
+             data:'./assets/uploads/generatedfile.pdf'
+         });
+         fs.unlinkSync('./assets/uploads/generatedfile.pdf');
+         let UpdateBooking = await Booking.updateOne({id:BookingDetail.id}).set({userComment:req.body.prescription,status:2,consultTime:moment().format('YYYY-MM-DD HH:mm:ss'),file:fileLoc.Location});
+         await sails.helpers.sendMessage.with({
+             file:fileLoc.Location,
+             mobile:CustomerData.mobileNum
+         });
+        res.ok({status:true,msg:'Prescription updated successfully',data:UpdateBooking});
+    }, 
   BookingListing: async function (req, res) {
     const user = req.user;
     let filter = {};
     const status = parseInt(req.query.status);
     let bookingList = await Booking.find({ status: status, userId: user.id });
-    res.ok({ data: bookingList });
+    res.ok({ status:true,msg:'Booking List successfully',data: bookingList });
   },
 };
