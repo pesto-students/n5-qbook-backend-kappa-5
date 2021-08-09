@@ -10,18 +10,16 @@
  */
 
 module.exports.http = {
-
   /****************************************************************************
-  *                                                                           *
-  * Sails/Express middleware to run for every HTTP request.                   *
-  * (Only applies to HTTP requests -- not virtual WebSocket requests.)        *
-  *                                                                           *
-  * https://sailsjs.com/documentation/concepts/middleware                     *
-  *                                                                           *
-  ****************************************************************************/
+   *                                                                           *
+   * Sails/Express middleware to run for every HTTP request.                   *
+   * (Only applies to HTTP requests -- not virtual WebSocket requests.)        *
+   *                                                                           *
+   * https://sailsjs.com/documentation/concepts/middleware                     *
+   *                                                                           *
+   ****************************************************************************/
 
   middleware: {
-
     /***************************************************************************
     *                                                                          *
     * The order in which middleware should be run for HTTP requests.           *

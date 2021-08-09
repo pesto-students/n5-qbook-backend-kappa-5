@@ -6,29 +6,29 @@
  */
 
 module.exports = {
-  tableName:'User',
+  tableName: "User",
   attributes: {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
     firstname: {
-      type: 'string',
+      type: "string",
     },
     lastname: {
-      type: 'string',
+      type: "string",
     },
-    email:{
-      type: 'string'
+    email: {
+      type: "string",
     },
-    googleAuthId:{
-      type: 'string'
+    googleAuthId: {
+      type: "string",
     },
-    image:{
-      type: 'string'
+    image: {
+      type: "string",
     },
-    accessToken:{
-      type: 'string'
-    }
+    accessToken: {
+      type: "string",
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

@@ -11,8 +11,8 @@
 var jwt = require("jsonwebtoken");
 
 module.exports = async function (req, res, next) {
-  sails.helpers
-    .verifyToken.with({
+  sails.helpers.verifyToken
+    .with({
       req: req,
       res: res,
     })
