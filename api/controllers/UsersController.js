@@ -24,11 +24,6 @@ module.exports = {
     // set a cookie on the client side that they can't modify unless they sign out (just for web apps)
     await Users.updateOne({email:user.email}).set({accessToken:token});
     
-    res.cookie('sailsjwt', token, {
-        signed: true,
-        // domain: '.yourdomain.com', // always use this in production to whitelist your domain
-        maxAge: sails.config.jwtExpires
-    })
     var data = {
         result:user,
         token:token
