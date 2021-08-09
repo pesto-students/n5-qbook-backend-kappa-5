@@ -17,11 +17,11 @@ checkAvailability:  async function(req,res){
     
     const uuid = req.query.uuid;
     if(!uuid){
-    return res.badRequest('please provide correct uuid');
+    return res.badRequest({status:false,msg:'please provide correct uuid',data:{}});
     }
     const qrCode = await QRCode.findOne({uuid:uuid});
     if(!qrCode){
-    return res.badRequest('uuid is expired already');
+    return res.badRequest({status:false,msg:'uuid is expired already',data:{}});
     }
     const Config = await Setting.findOne({userId:qrCode.userId});
     const format = 'YYYY-MM-DD HH:mm:ss';
@@ -40,14 +40,14 @@ checkAvailability:  async function(req,res){
         }
     });
     if(!finalCheck){
-        return res.badRequest('Please book appointment between '+message);
+        return res.badRequest({status:false,msg:'Please book appointment between '+message,data:{}});
     }
 
     const randomValue =  Math.floor(Math.random() * 90000) + 10000;
 
     const RazorPayOrderID = await sails.helpers.createOrder.with({amount:Config.fees,currency:'INR',receipt:'receipt#'+randomValue,notes:'Appointment'});
 
-    return res.ok({data:{orderId:RazorPayOrderID.id,fees:Config.fees},message:'"Booking Availabile"'});
+    return res.ok({status:true,data:{orderId:RazorPayOrderID.id,fees:Config.fees},msg:'"Booking Availabile"'});
 
     },
     createNewBooking: async function(req,res){
@@ -85,7 +85,7 @@ checkAvailability:  async function(req,res){
         'searchToken':crypto.randomBytes(50).toString('hex'),
     }).fetch();
  
-    res.ok('booking created successfully');
+    res.ok({status:true,msg:'booking created successfully',data:BookingDetail});
 
 
         
@@ -125,10 +125,10 @@ checkAvailability:  async function(req,res){
              file:fileLoc.Location,
              mobile:CustomerData.mobileNum
          });
-        res.ok(UpdateBooking);
+        res.ok({status:true,msg:'Prescription updated successfully',data:UpdateBooking});
     },
     BookingListing: async function(req,res){
-
+        
     } 
  
 
