@@ -8,6 +8,23 @@
 module.exports = {
   tableName: "Booking",
   attributes: {
+
+    userId:{
+      type:'string'
+    },
+    customerId:{
+      type:'string'
+    },
+
+    customer:{
+      model:'customer',
+      unique: true
+    },
+    user:{
+      model:'users',
+      unique: true
+    }
+
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝

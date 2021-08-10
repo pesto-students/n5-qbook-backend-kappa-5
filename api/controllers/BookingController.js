@@ -10,6 +10,7 @@ const fs = require("fs");
 let path = require("path");
 const ejs = require("ejs");
 const pdf = require("html-pdf");
+const Customer = require("../models/Customer");
 
 module.exports = {
   checkAvailability: async function (req, res) {
@@ -138,5 +139,14 @@ module.exports = {
     const status = parseInt(req.query.status);
     let bookingList = await Booking.find({ status: status, userId: user.id });
     res.ok({ status:true,msg:'Booking List successfully',data: bookingList });
+  },
+  BookingDetail: async function (req, res) {
+    const user = req.user;
+    let filter = {};
+    const searchToken = req.query.searchToken;
+    let bookingDetail = await Booking.findOne({ searchToken: searchToken, userId: user.id });
+    let CustomerDetail = await Customer.findOne({id:bookingDetail.customerId});
+    //console.log(bookingDetail);
+    res.ok({ status:true,msg:'Booking Detail successfully',data: {bookingDetail:bookingDetail,customer:CustomerDetail}});
   },
 };
