@@ -33,6 +33,12 @@ module.exports = {
     file:{
       type:'string'
     },
+    paymentMode:{
+      type:'string'
+    },
+    customerInfo:{
+      type:'json'
+    }
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗

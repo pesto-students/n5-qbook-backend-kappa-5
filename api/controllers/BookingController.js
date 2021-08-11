@@ -87,7 +87,9 @@ module.exports = {
       userId: qrCode.userId,
       bookingDateTime: new Date().toISOString(),
       status: 1,
+      paymentMode:req.body.paymentMode,
       searchToken: crypto.randomBytes(50).toString("hex"),
+      customerInfo:{name:CustomerRecord.name,mobile:CustomerRecord.mobileNum}
     }).fetch();
  
     res.ok({status:true,msg:'booking created successfully',data:BookingDetail});
