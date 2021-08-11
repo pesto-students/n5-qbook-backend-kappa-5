@@ -9,19 +9,19 @@ module.exports = {
   tableName: "Booking",
   attributes: {
 
-    userId:{
+    users_id:{
       type:'string'
     },
-    customerId:{
+    customer_id:{
       type:'string'
     },
 
-    customer:{
-      model:'customer',
+    patient:{
+      model:'Customer',
       unique: true
     },
-    user:{
-      model:'users',
+    doctor:{
+      model:'Users',
       unique: true
     }
 

@@ -10,8 +10,8 @@ module.exports = {
   attributes: {
     
     booking:{
-      collection:'booking',
-      via:'customer'
+      collection:'Booking',
+      via:'patient'
     }
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗

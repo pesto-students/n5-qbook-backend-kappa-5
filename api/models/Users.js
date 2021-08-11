@@ -30,8 +30,8 @@ module.exports = {
       type: "string",
     },
     booking:{
-      collection:'booking',
-      via:'user'
+      collection:'Booking',
+      via:'doctor'
     }
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
