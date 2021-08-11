@@ -42,7 +42,6 @@ module.exports = {
     if(!finalCheck){
         return res.badRequest({status:false,msg:'Please book appointment between '+message,data:{}});
     }
-
     const randomValue = Math.floor(Math.random() * 90000) + 10000;
 
     return res.ok({status:true,data:{orderId:RazorPayOrderID.id,fees:Config.fees},msg:'"Booking Availabile"'});
