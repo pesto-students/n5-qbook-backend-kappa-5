@@ -9,10 +9,18 @@ module.exports = {
   tableName: "Customer",
   attributes: {
     
-    booking:{
-      collection:'Booking',
-      via:'patient'
-    }
+    name:{
+      type:'string'
+    },
+    mobileNum:{
+      type:'number'
+    },
+    isMobileNumVerified:{
+      type:'boolean'
+    },
+    token:{
+      type:'string'
+    },
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝

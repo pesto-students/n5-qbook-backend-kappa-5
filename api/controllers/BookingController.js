@@ -125,7 +125,7 @@ module.exports = {
              data:'./assets/uploads/generatedfile.pdf'
          });
          fs.unlinkSync('./assets/uploads/generatedfile.pdf');
-         let UpdateBooking = await Booking.updateOne({id:BookingDetail.id}).set({userComment:req.body.prescription,status:2,consultTime:moment().format('YYYY-MM-DD HH:mm:ss'),file:fileLoc.Location});
+         let UpdateBooking = await Booking.updateOne({id:BookingDetail.id}).set({userComment:req.body.prescription,status:2,consultTime:new Date().toISOString(),file:fileLoc.Location});
          await sails.helpers.sendMessage.with({
              file:fileLoc.Location,
              mobile:CustomerData.mobileNum
