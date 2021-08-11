@@ -9,21 +9,30 @@ module.exports = {
   tableName: "Booking",
   attributes: {
 
-    users_id:{
+    customerId:{
       type:'string'
     },
-    customer_id:{
+    userId:{
       type:'string'
     },
-
-    patient:{
-      model:'Customer',
-      unique: true
+    bookingDateTime:{
+      type:'string'
     },
-    doctor:{
-      model:'Users',
-      unique: true
-    }
+    status:{
+      type:'number'
+    },
+    searchToken:{
+      type:'string'
+    },
+    userComment:{
+      type:'string'
+    },
+    consultTime:{
+      type:'string'
+    },
+    file:{
+      type:'string'
+    },
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
