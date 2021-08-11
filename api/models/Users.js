@@ -29,6 +29,10 @@ module.exports = {
     accessToken: {
       type: "string",
     },
+    booking:{
+      collection:'Booking',
+      via:'doctor'
+    }
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

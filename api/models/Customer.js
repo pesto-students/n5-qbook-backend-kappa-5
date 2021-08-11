@@ -8,6 +8,11 @@
 module.exports = {
   tableName: "Customer",
   attributes: {
+    
+    booking:{
+      collection:'Booking',
+      via:'patient'
+    }
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝

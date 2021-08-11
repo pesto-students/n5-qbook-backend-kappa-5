@@ -139,4 +139,13 @@ module.exports = {
     let bookingList = await Booking.find({ status: status, userId: user.id });
     res.ok({ status:true,msg:'Booking List successfully',data: bookingList });
   },
+  BookingDetail: async function (req, res) {
+    const user = req.user;
+    console.log(user);
+    let filter = {};
+    const searchToken = req.query.searchToken;
+    let bookingDetail = await Booking.findOne({ searchToken: searchToken, userId: user.id });
+    let CustomerDetail = await Customer.findOne({id:bookingDetail.customerId});
+    res.ok({ status:true,msg:'Booking Detail',data: {bookingDetail:bookingDetail,customer:CustomerDetail}});
+  },
 };
