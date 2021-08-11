@@ -38,7 +38,11 @@ module.exports = {
     },
     customerInfo:{
       type:'json'
+    },
+    diagnosis:{
+      type:'string'
     }
+
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗

@@ -112,13 +112,16 @@ module.exports = {
             customer:CustomerData,
             User:UserData,
             Setting:UserConfig,
-            Content:req.body.prescription
+            Prescription:req.body.prescription,
+            Diagnosis:req.body.diagnosis,
+            Mode:BookingDetail.paymentMode
         }
 
         const filePathName = path.resolve('.','views','pages','invoice.ejs');
         const htmlString = fs.readFileSync(filePathName).toString();
         let  options = { format: 'Letter', };
         const ejsData = ejs.render(htmlString, data);
+        //console.log(ejsData);
         let finalresponse = await pdf.create(ejsData,options).toFile('./assets/uploads/generatedfile.pdf',(err, response) => {
             if (err) return console.log(err);
             return response;
@@ -127,7 +130,7 @@ module.exports = {
              data:'./assets/uploads/generatedfile.pdf'
          });
          fs.unlinkSync('./assets/uploads/generatedfile.pdf');
-         let UpdateBooking = await Booking.updateOne({id:BookingDetail.id}).set({userComment:req.body.prescription,status:2,consultTime:new Date().toISOString(),file:fileLoc.Location});
+         let UpdateBooking = await Booking.updateOne({id:BookingDetail.id}).set({diagnosis:req.body.diagnosis,userComment:req.body.prescription,status:2,consultTime:new Date().toISOString(),file:fileLoc.Location});
          await sails.helpers.sendMessage.with({
              file:fileLoc.Location,
              mobile:CustomerData.mobileNum
