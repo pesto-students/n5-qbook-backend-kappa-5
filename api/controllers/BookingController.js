@@ -56,16 +56,13 @@ module.exports = {
         });
       }
       const randomValue = Math.floor(Math.random() * 90000) + 10000;
+      const RazorPayOrderID = await sails.helpers.createOrder.with({amount:Config.fees,currency:'INR',receipt:'receipt#'+randomValue,notes:'Appointment'});
       return res.ok({
         status: true,
         data: { orderId: RazorPayOrderID.id, fees: Config.fees },
         msg: '"Booking Availabile"',
       });
 
-      return res.ok({
-        data: { orderId: RazorPayOrderID.id },
-        message: '"Booking Availabile"',
-      });
     } catch (err) {
       console.log(err);
       res.badRequest({
