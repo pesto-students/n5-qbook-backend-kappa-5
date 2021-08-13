@@ -23,7 +23,7 @@ module.exports = {
   exits: {
     invalid: {
       responseType: "badRequest",
-      description: "The provided email address and/or password are invalid.",
+      description: "Order is not created due to some issue.",
     },
     success: {
       description: "All done.",

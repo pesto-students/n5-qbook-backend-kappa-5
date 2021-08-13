@@ -1,61 +1,71 @@
 /**
- * Booking.js
+ * Transaction.js
  *
  * @description :: A model definition represents a database table/collection.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
 
 module.exports = {
-  tableName: "Booking",
-  attributes: {
+  tableName: "Transaction",
 
-    customerId:{
+  attributes: {
+    payment_id:{
       type:'string'
     },
-    userId:{
+    entity:{
       type:'string'
     },
-    bookingDateTime:{
+    amount:{
+      type:'number'
+    },
+    currency:{
       type:'string'
     },
     status:{
-      type:'number'
-    },
-    searchToken:{
       type:'string'
     },
-    userComment:{
+    method:{
       type:'string'
     },
-    consultTime:{
+    captured:{
+      type:'boolean'
+    },
+    description:{
       type:'string'
     },
-    file:{
+    card_id:{
       type:'string'
     },
-    paymentMode:{
-      type:'string'
-    },
-    customerInfo:{
+    card:{
       type:'json'
     },
-    diagnosis:{
+    email:{
       type:'string'
     },
-    transactionId:{
+    contact:{
       type:'string'
+    },
+    fee:{
+      type:'string'
+    },
+    transactionInfo:{
+      type:'json'
     }
-
-
-
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
+
+
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
+
+
     //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
+
   },
+
 };
+

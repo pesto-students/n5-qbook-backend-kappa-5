@@ -76,6 +76,10 @@ module.exports = {
     try {
       //validate UUID
       const uuid = req.body.uuid;
+      let transaction_id = "";
+      let tokenNumber = 0;
+      let expectedDateTime = '';
+      let docsData
       if (!uuid) {
         return res.badRequest("please provide correct uuid");
       }
@@ -96,11 +100,31 @@ module.exports = {
       }
 
       if (req.body.paymentMode && req.body.paymentMode == "online") {
-        const validateSignature = crypto
-          .createHmac("hmac_sha256", sails.config.RAZOR_SECRET_KEY)
-          .update(req.body.order_id + "|" + req.body.razorpay_payment_id);
-        if (validateSignature == req.body.razorpay_signature) {
-        }
+        let transactionData = {};
+        //const validateSignature = crypto
+         // .createHmac("hmac_sha256", sails.config.RAZOR_SECRET_KEY)
+         // .update(req.body.order_id + "|" + req.body.razorpay_payment_id);
+        //if (validateSignature == req.body.razorpay_signature) {
+          let transactionDetail = await sails.helpers.createTransaction.with({payment_id:req.body.razorpay_payment_id})
+          transactionData.payment_id = transactionDetail.id;
+          transactionData.entity = transactionDetail.entity;
+          transactionData.amount = transactionDetail.amount;
+          transactionData.currency = transactionDetail.currency;
+          transactionData.status = transactionDetail.status;
+          transactionData.method = transactionDetail.method;
+          transactionData.captured = transactionDetail.captured;
+          transactionData.description = transactionDetail.description;
+          transactionData.card_id = transactionDetail.card_id;
+          transactionData.email = transactionDetail.email;
+          transactionData.card = transactionDetail.card;
+          transactionData.contact = transactionDetail.contact;
+          transactionData.fee = transactionDetail.fee;
+          transactionData.transactionInfo = transactionDetail;
+
+          let transaction = await Transaction.create(transactionData).fetch();
+          transaction_id = transaction.id;
+          //console.log('transactionDetail',transactionDetail);
+       // }
       }
 
       let BookingDetail = await Booking.create({
@@ -110,16 +134,24 @@ module.exports = {
         status: 1,
         paymentMode: req.body.paymentMode,
         searchToken: crypto.randomBytes(50).toString("hex"),
+        transactionId:transaction_id,
         customerInfo: {
           name: CustomerRecord.name,
           mobile: CustomerRecord.mobileNum,
         },
       }).fetch();
 
+      let totalBooking = await Booking.count({userId:qrCode.userId,status:1});
+      tokenNumber = totalBooking + 1;
+      const totalMinute = totalBooking * sails.config.consultTime;
+      expectedDateTime = moment().add(totalMinute,'minutes').format('YYYY-MM-DD hh:mm A');
+      docsData = await Users.findOne({id:qrCode.userId});
+
+
       res.ok({
         status: true,
         msg: "booking created successfully",
-        data: BookingDetail,
+        data: {booking:BookingDetail,tokenNumber:tokenNumber,expectedDateTime:expectedDateTime,docsData:docsData},
       });
     } catch (err) {
       console.log(err);
