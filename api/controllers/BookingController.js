@@ -81,11 +81,11 @@ module.exports = {
       let expectedDateTime = '';
       let docsData
       if (!uuid) {
-        return res.badRequest("please provide correct uuid");
+        return res.badRequest({status: false,msg:"please provide correct uuid",data:{}});
       }
       const qrCode = await QRCode.findOne({ uuid: uuid });
       if (!qrCode) {
-        return res.badRequest("uuid is expired already");
+        return res.badRequest({status: false,msg:"uuid is expired already",data:{}});
       }
       let CustomerRecord = await Customer.findOne({
         mobileNum: req.body.mobileNum,
@@ -102,8 +102,9 @@ module.exports = {
       if (req.body.paymentMode && req.body.paymentMode == "online") {
         let transactionData = {};
         const validateSignature = crypto
-          .createHmac("hmac_sha256", sails.config.RAZOR_SECRET_KEY)
-          .update(req.body.order_id + "|" + req.body.razorpay_payment_id);
+          .createHmac("sha256", sails.config.RAZOR_SECRET_KEY)
+          .update(req.body.order_id + "|" + req.body.razorpay_payment_id).digest('hex');
+        console.log(validateSignature);  
         if (validateSignature == req.body.razorpay_signature) {
           let transactionDetail = await sails.helpers.createTransaction.with({payment_id:req.body.razorpay_payment_id})
           transactionData.payment_id = transactionDetail.id;
