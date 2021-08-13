@@ -10,7 +10,7 @@ const fs = require("fs");
 let path = require("path");
 const ejs = require("ejs");
 const pdf = require("html-pdf");
-const Booking = require("../models/Booking");
+
 
 module.exports = {
   checkAvailability: async function (req, res) {
@@ -291,6 +291,7 @@ module.exports = {
       }
       let bookingDetail = await Booking.findOne({
         searchToken: searchToken,
+        status:1
       });
       if(!bookingDetail){
         res.badRequest({
