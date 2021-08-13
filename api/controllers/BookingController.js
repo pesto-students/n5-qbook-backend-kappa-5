@@ -10,6 +10,7 @@ const fs = require("fs");
 let path = require("path");
 const ejs = require("ejs");
 const pdf = require("html-pdf");
+const Booking = require("../models/Booking");
 
 module.exports = {
   checkAvailability: async function (req, res) {
@@ -79,7 +80,7 @@ module.exports = {
       let transaction_id = "";
       let tokenNumber = 0;
       let expectedDateTime = '';
-      let docsData
+      let docsData = {};
       if (!uuid) {
         return res.badRequest({status: false,msg:"please provide correct uuid",data:{}});
       }
@@ -252,7 +253,6 @@ module.exports = {
   BookingDetail: async function (req, res) {
     try {
       const user = req.user;
-      console.log(user);
       let filter = {};
       const searchToken = req.query.searchToken;
       let bookingDetail = await Booking.findOne({
@@ -276,4 +276,52 @@ module.exports = {
       });
     }
   },
+  bookingConfirmation: async function(req,res){
+    try{
+      let tokenNumber = 0;
+      let expectedDateTime = '';
+      let docsData = {};
+      const searchToken = req.query.searchToken;
+      if(!searchToken){
+        res.badRequest({
+          status: false,
+          msg: "please provide searchToken",
+          data: {},
+        });
+      }
+      let bookingDetail = await Booking.findOne({
+        searchToken: searchToken,
+      });
+      if(!bookingDetail){
+        res.badRequest({
+          status: false,
+          msg: "please provide correct searchToken",
+          data: {},
+        });
+      }
+
+      let totalBooking = await Booking.count({userId:bookingDetail.userId,status:1});
+      tokenNumber = totalBooking + 1;
+      const totalMinute = totalBooking * sails.config.consultTime;
+      expectedDateTime = moment().add(totalMinute,'minutes').format('YYYY-MM-DD hh:mm A');
+      docsData = await Users.findOne({id:bookingDetail.userId});
+
+
+      res.ok({
+        status: true,
+        msg: "booking confirmation ",
+        data: {booking:bookingDetail,tokenNumber:tokenNumber,expectedDateTime:expectedDateTime,docsData:docsData},
+      });
+
+
+
+    } catch (err) {
+      console.log(err);
+      res.badRequest({
+        status: false,
+        msg: "Something went wrong !",
+        data: {},
+      });
+    }
+  }
 };

@@ -24,5 +24,6 @@ module.exports.policies = {
     "*": "isAuthenticated",
     checkAvailability: true,
     createNewBooking: true,
+    bookingConfirmation: true,
   },
 };
