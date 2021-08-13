@@ -101,10 +101,10 @@ module.exports = {
 
       if (req.body.paymentMode && req.body.paymentMode == "online") {
         let transactionData = {};
-        //const validateSignature = crypto
-         // .createHmac("hmac_sha256", sails.config.RAZOR_SECRET_KEY)
-         // .update(req.body.order_id + "|" + req.body.razorpay_payment_id);
-        //if (validateSignature == req.body.razorpay_signature) {
+        const validateSignature = crypto
+          .createHmac("hmac_sha256", sails.config.RAZOR_SECRET_KEY)
+          .update(req.body.order_id + "|" + req.body.razorpay_payment_id);
+        if (validateSignature == req.body.razorpay_signature) {
           let transactionDetail = await sails.helpers.createTransaction.with({payment_id:req.body.razorpay_payment_id})
           transactionData.payment_id = transactionDetail.id;
           transactionData.entity = transactionDetail.entity;
@@ -124,7 +124,7 @@ module.exports = {
           let transaction = await Transaction.create(transactionData).fetch();
           transaction_id = transaction.id;
           //console.log('transactionDetail',transactionDetail);
-       // }
+        }
       }
 
       let BookingDetail = await Booking.create({

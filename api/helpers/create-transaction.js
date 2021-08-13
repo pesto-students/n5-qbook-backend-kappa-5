@@ -35,15 +35,8 @@ module.exports = {
       key_secret: sails.config.RAZOR_SECRET_KEY,
     });
 
-    
-
     instance.payments.fetch(inputs.payment_id).then((data) => {
-      instance.payments.capture(data.id,data.amount,data.currency).then((res) => {
-        return exits.success(res);
-      }).catch((error) => {
-        return exits.invalid(error);
-      });
-      
+      return exits.success(data);  
     })
     .catch((error) => {
       return exits.invalid(error);
