@@ -29,6 +29,9 @@ module.exports = {
     accessToken: {
       type: "string",
     },
+    token:{
+      type:'string'
+    }
     
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

@@ -19,6 +19,9 @@ module.exports = {
     image: {
       type: "string",
     },
+    token:{
+      type:'string',
+    }
   },
 
   exits: {

@@ -40,9 +40,9 @@ module.exports = {
       admin.app();
     }
 
-    const message = {
+    let message = {
       notification: inputs.notification,
-      data:JSON.stringify(inputs.data),
+      //data:inputs.data,
       token:inputs.token
     };
 
@@ -56,6 +56,7 @@ module.exports = {
         return exits.success(response);
       })
       .catch((error) => {
+        console.log(error);
         return exits.invalid("Missing Auth ID.");
       });
   },
