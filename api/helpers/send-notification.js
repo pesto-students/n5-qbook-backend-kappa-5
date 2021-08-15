@@ -10,7 +10,7 @@ module.exports = {
     data: {
       type: "json",
     },
-    deviceToken: {
+    token: {
       type: "string",
     },
     notification:{
