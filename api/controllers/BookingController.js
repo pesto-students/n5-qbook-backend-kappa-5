@@ -167,7 +167,7 @@ module.exports = {
       const message = {
         data: BookingDetail,
         notification:{title:"New Booking Recieved",body:"New Booking from "+req.body.name},
-        token:docsData.accessToken
+        token:docsData.token
       };
       const notification = await sails.helpers.sendNotification.with(message);
 
