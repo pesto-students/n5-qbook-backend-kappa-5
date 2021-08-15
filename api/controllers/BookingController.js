@@ -10,6 +10,7 @@ const fs = require("fs");
 let path = require("path");
 const ejs = require("ejs");
 const pdf = require("html-pdf");
+const Queue = require("../models/Queue");
 
 
 module.exports = {
@@ -149,6 +150,27 @@ module.exports = {
       expectedDateTime = moment().add(totalMinute,'minutes').format('YYYY-MM-DD hh:mm A');
       docsData = await Users.findOne({id:qrCode.userId});
 
+      let QueueCreated = await Queue.create({
+        customerId:CustomerRecord.id,
+        currentToken:tokenNumber,
+        estimatedDateTime:expectedDateTime,
+        userId:qrCode.userId,
+        bookingId:BookingDetail.id,
+        customerInfo:{
+          name: CustomerRecord.name,
+          mobile: CustomerRecord.mobileNum,
+        },
+        userInfo:docsData,
+      }).fetch();
+
+      //sending push notfication
+
+      const message = {
+        data: BookingDetail,
+        notification:{title:"New Booking Recieved",body:"New Booking from "+req.body.name},
+        token:docsData.accessToken
+      };
+      const notification = await sails.helpers.sendNotification.with(message);
 
       res.ok({
         status: true,
@@ -216,6 +238,33 @@ module.exports = {
         file: fileLoc.Location,
         mobile: CustomerData.mobileNum,
       });
+
+      let removeQueue = await Queue.destroyOne({bookingId:BookingDetail.id,customerId:BookingDetail.customerId,userId:BookingDetail.userId});
+
+      let nextQueue = await Queue.findOne({
+        userId:BookingDetail.userId
+      }).sort('currentToken ASC');
+
+      let DoctorsQueue = await Queue.find({userId:BookingDetail.userId});
+
+      DoctorsQueue && DoctorsQueue.length > 0 && DoctorsQueue.map(async(queue) => {
+        let token = queue.currentToken;
+        token = token - 1;
+        const totalMinute = token * sails.config.consultTime;
+        const expectedDateTime = moment().add(totalMinute,'minutes').format('YYYY-MM-DD hh:mm A');
+        await Queue.update({userId:queue.userId,customerId:queue.customerId}).set({currentToken:token,estimatedDateTime:expectedDateTime});
+      });
+
+      let NextCustomer = await Customer.findOne({id:nextQueue.customerId});
+
+      const message = {
+        data: nextQueue,
+        notification:{title:"Your number is about to come",body:"Your Queue is Reduced Now, Please ready to go inside"},
+        token:NextCustomer.token
+      };
+      const notification = await sails.helpers.sendNotification.with(message);
+
+
       res.ok({
         status: true,
         msg: "Prescription updated successfully",
@@ -234,8 +283,14 @@ module.exports = {
     try {
       const user = req.user;
       let filter = {};
+      let bookingList = [];
       const status = parseInt(req.query.status);
-      let bookingList = await Booking.find({ status: status, userId: user.id });
+      if(status == 1){
+         bookingList = await Booking.find({ status: status, userId: user.id });
+      }else{
+         bookingList = await Booking.find({ status: {'>':1},userId: user.id });
+      }
+      
       res.ok({
         status: true,
         msg: "Booking List successfully",
@@ -262,6 +317,7 @@ module.exports = {
       let CustomerDetail = await Customer.findOne({
         id: bookingDetail.customerId,
       });
+      
       res.ok({
         status: true,
         msg: "Booking Detail",
@@ -301,17 +357,14 @@ module.exports = {
         });
       }
 
-      let totalBooking = await Booking.count({userId:bookingDetail.userId,status:1});
-      tokenNumber = totalBooking + 1;
-      const totalMinute = totalBooking * sails.config.consultTime;
-      expectedDateTime = moment().add(totalMinute,'minutes').format('YYYY-MM-DD hh:mm A');
+      let QueueData = await Queue.findOne({bookingId:bookingDetail.id,customerId:bookingDetail.customerId,userId:bookingDetail.userId}); 
       docsData = await Users.findOne({id:bookingDetail.userId});
 
 
       res.ok({
         status: true,
         msg: "booking confirmation ",
-        data: {booking:bookingDetail,tokenNumber:tokenNumber,expectedDateTime:expectedDateTime,docsData:docsData},
+        data: {booking:bookingDetail,tokenNumber:QueueData.currentToken,expectedDateTime:QueueData.estimatedDateTime,docsData:docsData},
       });
 
 
@@ -324,5 +377,25 @@ module.exports = {
         data: {},
       });
     }
+  },
+  CancelledAllBooking: async function (req,res){
+     try{
+       const user = req.user;
+       //cancelled All Active Booking
+       await Booking.update({userId:user.id}).set({status:3,userComment:'Booking Cancelled By '+user.firstname});
+       res.ok({
+        status: true,
+        msg: "booking cancelled Successfully! ",
+        data: {},
+      });
+
+     }catch(err){
+      console.log(err);
+      res.badRequest({
+        status: false,
+        msg: "Something went wrong !",
+        data: {},
+      });
+     }
   }
 };

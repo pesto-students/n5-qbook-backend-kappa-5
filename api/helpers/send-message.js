@@ -34,7 +34,7 @@ module.exports = {
             url +
             ".",
           messagingServiceSid: "MGe0f908db8cc3c7ea7ffaa0b46f6e7040",
-          to: inputs.mobile,
+          to: '+91'+inputs.mobile,
         })
         .then((message) => console.log(message.sid))
         .done();

@@ -112,17 +112,8 @@ module.exports = {
           uuid: hash,
         });
       }
-      const message = {
-        data: {
-          score: "850",
-          time: "2:45",
-        },
-        token:
-          "e41rJP7ZwinbWjwqdaSyqw:APA91bGVE03bHzKDw1rMIYdqJp9SJHTiVKanFyv0rzkZBWIBFsjcgxkGv-lIMMZl8KC3G9miivIGrfaoyyJTpjHdwsFyOEfG-tdlgDIBnBKwSAzA61yNJOXuVJU1A2U8JJ52XESjpcFz",
-      };
-      //const notification = await sails.helpers.sendNotification.with(message);
 
-      const url = sails.config.FRONT_END_URL + "qrcode?uuid=" + qrCode.uuid;
+      const url = sails.config.FRONT_END_URL + "booking?uuid=" + qrCode.uuid;
       return res.ok({ status: true, msg: "QR Code Url", data: url });
     } catch (err) {
       console.log(err);
@@ -133,4 +124,24 @@ module.exports = {
       });
     }
   },
+  UserSupportRequest: async function (req,res){
+    try { 
+    const user = req.user;
+     let emailObj = {
+       name: user.firstname,
+       email:user.email,
+       subject:req.body.subject,
+       query:req.body.query
+     }
+    await Mailer.sendSupportMail(emailObj);
+    return res.ok({ status: true, msg: "Support Mail sent successfully", data:{}});
+  } catch (err) {
+    console.log(err);
+    return res.badRequest({
+      status: false,
+      msg: "Something went wrong !",
+      data: {},
+    });
+  }
+  }
 };

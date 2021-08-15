@@ -13,6 +13,9 @@ module.exports = {
     deviceToken: {
       type: "string",
     },
+    notification:{
+      type:"json"
+    }
   },
 
   exits: {
@@ -38,12 +41,9 @@ module.exports = {
     }
 
     const message = {
-      notification: {
-        title: "Hello Mumbai",
-        body: "Heheheheheheheheheheheh",
-      },
-      token:
-        "e41rJP7ZwinbWjwqdaSyqw:APA91bGVE03bHzKDw1rMIYdqJp9SJHTiVKanFyv0rzkZBWIBFsjcgxkGv-lIMMZl8KC3G9miivIGrfaoyyJTpjHdwsFyOEfG-tdlgDIBnBKwSAzA61yNJOXuVJU1A2U8JJ52XESjpcFz",
+      notification: inputs.notification,
+      data:inputs.data,
+      token:inputs.token
     };
 
     // Send a message to the device corresponding to the provided

@@ -30,7 +30,9 @@ module.exports.routes = {
     "BookingController.createPrescription",
   "GET /api/v1/booking/list": "BookingController.BookingListing",
   "GET /api/v1/booking/detail": "BookingController.BookingDetail",
-  "GET /api/v1/booking/confirmation": "BookingController.bookingConfirmation"
+  "GET /api/v1/booking/confirmation": "BookingController.bookingConfirmation",
+  "GET /api/v1/booking/cancelAllBooking": "BookingController.CancelledAllBooking",
+  "POST /api/v1/user/support": "UsersController.UserSupportRequest",
 
   /***************************************************************************
    *                                                                          *
