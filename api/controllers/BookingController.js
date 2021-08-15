@@ -259,14 +259,14 @@ module.exports = {
       }).sort('currentToken ASC');
 
       let NextCustomer = await Customer.findOne({id:nextQueue.customerId});
-
+      if(NextCustomer.token && NextCustomer.token != ""){
       const message = {
         data: nextQueue,
         notification:{title:"Your number is about to come",body:"Your Queue is Reduced Now, Please ready to go inside"},
         token:NextCustomer.token
       };
       const notification = await sails.helpers.sendNotification.with(message);
-
+    }
 
       res.ok({
         status: true,
