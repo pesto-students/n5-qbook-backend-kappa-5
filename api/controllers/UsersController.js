@@ -23,7 +23,7 @@ module.exports = {
         expiresIn: sails.config.jwtExpires,
       });
       // set a cookie on the client side that they can't modify unless they sign out (just for web apps)
-      await Users.updateOne({ email: user.email }).set({ accessToken: token });
+      await Users.updateOne({ email: user.email }).set({ accessToken: token,token:req.body.token });
 
       var data = {
         result: user,
