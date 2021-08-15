@@ -88,6 +88,7 @@ module.exports = {
       if (!qrCode) {
         return res.badRequest({status: false,msg:"uuid is expired already",data:{}});
       }
+      const setting = await Setting.findOne({userId:qrCode.userId});
       let CustomerRecord = await Customer.findOne({
         mobileNum: req.body.mobileNum,
       });
@@ -134,6 +135,7 @@ module.exports = {
         userId: qrCode.userId,
         bookingDateTime: new Date().toISOString(),
         status: 1,
+        fees:setting.fees,
         paymentMode: req.body.paymentMode,
         searchToken: crypto.randomBytes(50).toString("hex"),
         transactionId:transaction_id,
@@ -163,14 +165,14 @@ module.exports = {
       }).fetch();
 
       //sending push notfication
-
+      if(docsData.token && docsData.token != ""){
       const message = {
         data: BookingDetail,
         notification:{title:"New Booking Recieved",body:"New Booking from "+req.body.name},
         token:docsData.token
       };
       const notification = await sails.helpers.sendNotification.with(message);
-
+    }
       res.ok({
         status: true,
         msg: "booking created successfully",
@@ -384,6 +386,7 @@ module.exports = {
        const user = req.user;
        //cancelled All Active Booking
        await Booking.update({userId:user.id}).set({status:3,userComment:'Booking Cancelled By '+user.firstname});
+       await Queue.destroy({userId:user.id}).fetch();
        res.ok({
         status: true,
         msg: "booking cancelled Successfully! ",

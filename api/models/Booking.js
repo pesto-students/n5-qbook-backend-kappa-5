@@ -33,6 +33,9 @@ module.exports = {
     file:{
       type:'string'
     },
+    fees:{
+      type:'number'
+    },
     paymentMode:{
       type:'string'
     },
