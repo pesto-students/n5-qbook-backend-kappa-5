@@ -241,9 +241,7 @@ module.exports = {
 
       let removeQueue = await Queue.destroyOne({bookingId:BookingDetail.id,customerId:BookingDetail.customerId,userId:BookingDetail.userId});
 
-      let nextQueue = await Queue.findOne({
-        userId:BookingDetail.userId
-      }).sort('currentToken ASC');
+    
 
       let DoctorsQueue = await Queue.find({userId:BookingDetail.userId});
 
@@ -254,6 +252,10 @@ module.exports = {
         const expectedDateTime = moment().add(totalMinute,'minutes').format('YYYY-MM-DD hh:mm A');
         await Queue.update({userId:queue.userId,customerId:queue.customerId}).set({currentToken:token,estimatedDateTime:expectedDateTime});
       });
+
+      let nextQueue = await Queue.findOne({
+        userId:BookingDetail.userId
+      }).sort('currentToken ASC');
 
       let NextCustomer = await Customer.findOne({id:nextQueue.customerId});
 
