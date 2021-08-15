@@ -10,7 +10,6 @@ const fs = require("fs");
 let path = require("path");
 const ejs = require("ejs");
 const pdf = require("html-pdf");
-const Queue = require("../models/Queue");
 
 
 module.exports = {
