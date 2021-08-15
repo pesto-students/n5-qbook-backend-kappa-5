@@ -42,7 +42,7 @@ module.exports = {
 
     const message = {
       notification: inputs.notification,
-      data:inputs.data,
+      data:JSON.stringify(inputs.data),
       token:inputs.token
     };
 
