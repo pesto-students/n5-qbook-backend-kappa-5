@@ -60,7 +60,7 @@ module.exports = {
       const RazorPayOrderID = await sails.helpers.createOrder.with({amount:Config.fees,currency:'INR',receipt:'receipt#'+randomValue,notes:'Appointment'});
       return res.ok({
         status: true,
-        data: { orderId: RazorPayOrderID.id, fees: Config.fees },
+        data: { orderId: RazorPayOrderID.id, fees: parseInt(Config.fees)*100 },
         msg: '"Booking Availabile"',
       });
 
