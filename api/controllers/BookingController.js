@@ -32,7 +32,7 @@ module.exports = {
         });
       }
       const Config = await Setting.findOne({ userId: qrCode.userId });
-      const format = "YYYY-MM-DD HH:mm:ss";
+      const format = "YYYY-MM-DD HH:mm";
       const currentDate = moment().format("YYYY-MM-DD");
       const currentTime = moment().format(format);
       let checktime = false;
@@ -113,7 +113,7 @@ module.exports = {
         const validateSignature = crypto
           .createHmac("sha256", sails.config.RAZOR_SECRET_KEY)
           .update(req.body.order_id + "|" + req.body.razorpay_payment_id).digest('hex');
-        console.log(validateSignature);  
+        //console.log(validateSignature);  
         if (validateSignature == req.body.razorpay_signature) {
           let transactionDetail = await sails.helpers.createTransaction.with({payment_id:req.body.razorpay_payment_id})
           transactionData.payment_id = transactionDetail.id;
@@ -134,6 +134,8 @@ module.exports = {
           let transaction = await Transaction.create(transactionData).fetch();
           transaction_id = transaction.id;
           //console.log('transactionDetail',transactionDetail);
+        }else{
+          return res.badRequest({status: false,msg:"Something wrong with your payment please try agian",data:{}});
         }
       }
 
@@ -153,7 +155,7 @@ module.exports = {
       }).fetch();
 
       let totalBooking = await Booking.count({userId:qrCode.userId,status:1});
-      tokenNumber = totalBooking + 1;
+      tokenNumber = totalBooking;
       const totalMinute = totalBooking * sails.config.consultTime;
       expectedDateTime = moment().add(totalMinute,'minutes').format('YYYY-MM-DD hh:mm A');
       docsData = await Users.findOne({id:qrCode.userId});
