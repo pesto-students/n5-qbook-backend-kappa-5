@@ -254,19 +254,23 @@ module.exports = {
         await Queue.update({userId:queue.userId,customerId:queue.customerId}).set({currentToken:token,estimatedDateTime:expectedDateTime});
       });
 
-      let nextQueue = await Queue.findOne({
+      let nextQueue = await Queue.find({
         userId:BookingDetail.userId
-      }).sort('currentToken ASC');
+      }).sort([{currentToken: 'ASC'}]).limit(1);
 
-      let NextCustomer = await Customer.findOne({id:nextQueue.customerId});
+
+    if(nextQueue && nextQueue.length > 0){
+
+      let NextCustomer = await Customer.findOne({id:nextQueue[0].customerId});
       if(NextCustomer.token && NextCustomer.token != ""){
       const message = {
-        data: nextQueue,
+        data: nextQueue[0],
         notification:{title:"Your number is about to come",body:"Your Queue is Reduced Now, Please ready to go inside"},
         token:NextCustomer.token
       };
       const notification = await sails.helpers.sendNotification.with(message);
     }
+  }
 
       res.ok({
         status: true,
