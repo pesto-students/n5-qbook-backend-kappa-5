@@ -305,7 +305,7 @@ module.exports = {
       if(status == 1){
          bookingList = await Booking.find({ status: status, userId: user.id });
       }else{
-         bookingList = await Booking.find({ status: {'>':1},userId: user.id });
+         bookingList = await Booking.find({ userId: user.id });
       }
       
       res.ok({
