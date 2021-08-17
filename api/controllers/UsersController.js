@@ -6,6 +6,7 @@
  */
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const Setting = require("../models/Setting");
 
 module.exports = {
   login: async function (req, res) {
@@ -110,6 +111,16 @@ module.exports = {
       } else {
         qrCode = await QRCode.updateOne({ userId: user.id }).set({
           uuid: hash,
+        });
+      }
+
+      let Setting = await Setting.findOne({userId:qrCode.userId});
+
+      if(!Setting){
+        return res.badRequest({
+          status: false,
+          msg: "Please add a Setting First",
+          data: {},
         });
       }
 

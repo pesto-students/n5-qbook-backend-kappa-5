@@ -88,6 +88,7 @@ module.exports = {
       let tokenNumber = 0;
       let expectedDateTime = '';
       let docsData = {};
+      let CustomerRecord  = {};
       if (!uuid) {
         return res.badRequest({status: false,msg:"please provide correct uuid",data:{}});
       }
@@ -96,17 +97,14 @@ module.exports = {
         return res.badRequest({status: false,msg:"uuid is expired already",data:{}});
       }
       const setting = await Setting.findOne({userId:qrCode.userId});
-      let CustomerRecord = await Customer.findOne({
-        mobileNum: req.body.mobileNum,
-      });
-      if (!CustomerRecord) {
-        CustomerRecord = await Customer.create({
+     
+      CustomerRecord = await Customer.create({
           name: req.body.name,
           mobileNum: req.body.mobileNum,
           isMobileNumVerified: req.body.isMobileNumVerified,
           token: req.body.token,
         }).fetch();
-      }
+      
 
       if (req.body.paymentMode && req.body.paymentMode == "online") {
         let transactionData = {};
@@ -157,7 +155,7 @@ module.exports = {
       let totalBooking = await Booking.count({userId:qrCode.userId,status:1});
       tokenNumber = totalBooking;
       const totalMinute = totalBooking * sails.config.consultTime;
-      expectedDateTime = moment().add(totalMinute,'minutes').format('YYYY-MM-DD hh:mm A');
+      expectedDateTime = moment().add(totalMinute,'minutes').toISOString();
       docsData = await Users.findOne({id:qrCode.userId});
 
       let QueueCreated = await Queue.create({
@@ -260,7 +258,7 @@ module.exports = {
         let token = queue.currentToken;
         token = token - 1;
         const totalMinute = token * sails.config.consultTime;
-        const expectedDateTime = moment().add(totalMinute,'minutes').format('YYYY-MM-DD hh:mm A');
+        const expectedDateTime = moment().add(totalMinute,'minutes').toISOString();
         await Queue.update({userId:queue.userId,customerId:queue.customerId}).set({currentToken:token,estimatedDateTime:expectedDateTime});
       });
 

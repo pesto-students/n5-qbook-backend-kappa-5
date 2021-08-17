@@ -22,5 +22,5 @@ module.exports = {
   TWILLIO_ACCOUNT_ID: "ACe9cae4c795c89b6bf172788445afa4cd",
   TWILLIO_AUTH_TOKEN: "f336692611e8fa0df285f194332372d8",
   consultTime:15,
-  ADMIN_SUPPORT_EMAIL:'gauravtayal2013@gmail.com'
+  ADMIN_SUPPORT_EMAIL:'gauravtayal2013@gmail.com,mohit.niwadunge@gmail.com,dodlamounika@gmail.com'
 };
