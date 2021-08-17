@@ -56,6 +56,13 @@ module.exports = {
           data: {},
         });
       }
+      if(!Config.is_duty){
+        return res.badRequest({
+          status: false,
+          msg: "Doctor is off duty Now! Please book the Appointment Once the Doctor back",
+          data: {},
+        });
+      }
       const randomValue = Math.floor(Math.random() * 90000) + 10000;
       const RazorPayOrderID = await sails.helpers.createOrder.with({amount:Config.fees,currency:'INR',receipt:'receipt#'+randomValue,notes:'Appointment'});
       return res.ok({
@@ -236,6 +243,7 @@ module.exports = {
         }
       );
       await sails.helpers.sendMessage.with({
+        messgaeType:'precription',
         file: fileLoc.Location,
         mobile: CustomerData.mobileNum,
       });
@@ -389,8 +397,19 @@ module.exports = {
      try{
        const user = req.user;
        //cancelled All Active Booking
-       await Booking.update({userId:user.id}).set({status:3,userComment:'Booking Cancelled By '+user.firstname});
+       let BookingList = await Booking.find({userId:user.id,status:1});
+       BookingList && BookingList.map(async(book) => {
+        
+        await sails.helpers.sendMessage.with({
+          messgaeType:'cancel',
+          file: '',
+          mobile: book.customerInfo.mobile,
+        });
+        
+       })
+       await Booking.update({userId:user.id,status:1}).set({status:3,userComment:'Booking Cancelled By '+user.firstname});
        await Queue.destroy({userId:user.id}).fetch();
+
        res.ok({
         status: true,
         msg: "booking cancelled Successfully! ",

@@ -9,6 +9,9 @@ module.exports = {
   description: "",
 
   inputs: {
+    messgaeType:{
+      type:'string'
+    },
     file: {
       type: "string",
     },
@@ -25,6 +28,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // TODO
+    if(inputs.messgaeType == 'precription'){
     let shorturl = await shortUrl.short(inputs.file, function (err, url) {
       // console.log(url);
       client.messages
@@ -39,6 +43,17 @@ module.exports = {
         .then((message) => console.log(message.sid))
         .done();
     });
+  }else{
+    client.messages
+    .create({
+      body:
+        "Your Booking is Cancelled! Sorry for inconvience!",
+      messagingServiceSid: "MGe0f908db8cc3c7ea7ffaa0b46f6e7040",
+      to: '+91'+inputs.mobile,
+    })
+    .then((message) => console.log(message.sid))
+    .done();
+  }
     //console.log(shorturl);
 
     return exits.success(true);

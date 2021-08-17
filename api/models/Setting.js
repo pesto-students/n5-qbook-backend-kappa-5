@@ -25,11 +25,11 @@ module.exports = {
     },
     is_duty: {
       type: "boolean",
-      defaultsTo: false,
+      defaultsTo: true,
     },
     is_notification: {
       type: "boolean",
-      defaultsTo: false,
+      defaultsTo: true,
     },
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
