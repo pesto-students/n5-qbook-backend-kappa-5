@@ -134,7 +134,7 @@ module.exports = {
      *                                                                          *
      ***************************************************************************/
     cors: {
-      allRoutes: true,
+    allRoutes: true,
     allowOrigins: "*",
     allowCredentials: false,
     allowRequestHeaders: "*",
@@ -229,7 +229,7 @@ module.exports = {
      * > Be sure to use the right protocol!  ("http://" vs. "https://")         *
      *                                                                          *
      ***************************************************************************/
-    onlyAllowOrigins: ["http://localhost", "http://localhost:3000"],
+    onlyAllowOrigins: ["http://localhost", "http://localhost:3000","https://n5-qbook-j1kyunvoe-qbook.vercel.app"],
 
     /***************************************************************************
      *                                                                          *
