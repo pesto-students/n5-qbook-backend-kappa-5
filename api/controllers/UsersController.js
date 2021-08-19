@@ -6,6 +6,7 @@
  */
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const moment = require("moment");
 
 module.exports = {
   login: async function (req, res) {
@@ -153,5 +154,32 @@ module.exports = {
       data: {},
     });
   }
+  },
+  UserReportData: async function(req,res){
+    try{
+      const user = req.user;
+      let financeData = [];
+      let appointmentData = [];
+      let bookingRecord = await Booking.find({userId:user.id,status:2});
+
+
+      bookingRecord && bookingRecord.map((book) => {
+         const date = moment(book.bookingDateTime).format('DD-MM-YYYY');
+         const day =  moment(book.bookingDateTime).day();
+         const month = moment(book.bookingDateTime).month();
+         financeData.push({date:date,day:sails.config.MOMENT_WEEK_DAYS[day],month:sails.config.MOMENT_MONTH[month],payment:book.fees});
+         appointmentData.push({date:date,day:sails.config.MOMENT_WEEK_DAYS[day],month:sails.config.MOMENT_MONTH[month],appointment:1});
+      });
+
+      return res.ok({ status: true, msg: "Reports Data", data:{finance:financeData,appointment:appointmentData}});
+
+    }catch(err){
+    console.log(err);
+    return res.badRequest({
+      status: false,
+      msg: "Something went wrong !",
+      data: {},
+    });
+    }
   }
 };

@@ -178,7 +178,7 @@ module.exports = {
         notification:{title:"New Booking Recieved",body:"New Booking from "+req.body.name},
         token:docsData.token
       };
-      const notification = await sails.helpers.sendNotification.with(message);
+      //const notification = await sails.helpers.sendNotification.with(message);
     }
       res.ok({
         status: true,
@@ -276,7 +276,7 @@ module.exports = {
         notification:{title:"Your number is about to come",body:"Your Queue is Reduced Now, Please ready to go inside"},
         token:NextCustomer.token
       };
-      const notification = await sails.helpers.sendNotification.with(message);
+      //const notification = await sails.helpers.sendNotification.with(message);
     }
   }
 

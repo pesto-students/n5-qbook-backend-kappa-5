@@ -34,6 +34,7 @@ module.exports.routes = {
   "GET /api/v1/booking/confirmation": "BookingController.bookingConfirmation",
   "GET /api/v1/booking/cancelAllBooking": "BookingController.CancelledAllBooking",
   "POST /api/v1/user/support": "UsersController.UserSupportRequest",
+  "GET /api/v1/user/report" : "UsersController.UserReportData",
 
   /***************************************************************************
    *                                                                          *
