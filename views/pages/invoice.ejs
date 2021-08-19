@@ -1,0 +1,79 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<style>
+ @import url('https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap');
+
+body {
+    font-family: 'Maven Pro', sans-serif;
+    background-color: #f12369
+}
+
+hr {
+    color: #0000004f;
+    margin-top: 5px;
+    margin-bottom: 5px
+}
+
+.add td {
+    color: #c5c4c4;
+    text-transform: uppercase;
+    font-size: 12px
+}
+
+.content {
+    font-size: 14px
+}
+</style>
+ <div class="container mt-5 mb-3">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="d-flex flex-row p-2"> <img src="./assets/images/logo.png" width="60">
+                    <div class="d-flex flex-column"> <span class="font-weight-bold">Invoice</span> <small>INV-<%= Math.floor(Math.random() * 90000) + 10000 %></small> </div>
+                </div>
+                <hr>
+                <div class="table-responsive p-2">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr class="add">
+                                <td>To</td>
+                                <td>From</td>
+                            </tr>
+                            <tr class="content">
+                                <td class="font-weight-bold"><%= customer.name %> <br>Mob: <%= customer.mobileNum %> </td>
+                                <td class="font-weight-bold"><%= User.firstname %> <%= User.lastname %> <br> <%= User.email %> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <h4>Diagnosis</h4>
+                <%= Diagnosis %>
+                <hr>
+                <h4>Prescription</h4>
+                <%= Prescription %>
+                <hr>
+                <h4>Payment</h4>
+                <div class="products p-2">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr class="add">
+                                <td>Payment Mode</td>
+                                <td>Subtotal</td>
+                                <td></td>
+                                <td class="text-center">Total</td>
+                            </tr>
+                            <tr class="content">
+                                <td><%= Mode %></td>
+                                <td>Rs. <%= Setting.fees %></td>
+                                <td></td>
+                                <td class="text-center">Rs.<%= Setting.fees %></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
