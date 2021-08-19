@@ -113,12 +113,12 @@ module.exports = {
         });
       }
 
-      let Setting = await Setting.findOne({userId:qrCode.userId});
+      let setting = await Setting.findOne({userId:qrCode.userId});
 
-      if(!Setting){
+      if(!setting){
         return res.badRequest({
           status: false,
-          msg: "Please add a Setting First",
+          msg: "Please add a setting First",
           data: {},
         });
       }
