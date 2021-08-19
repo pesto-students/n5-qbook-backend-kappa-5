@@ -6,7 +6,6 @@
  */
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const Setting = require("../models/Setting");
 
 module.exports = {
   login: async function (req, res) {
