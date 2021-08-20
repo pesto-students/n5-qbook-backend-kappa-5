@@ -302,7 +302,7 @@ module.exports = {
       if(status == 1){
          bookingList = await Booking.find({ status: status, userId: user.id });
       }else{
-         let filter = {userId: user.id};
+         let filter = {userId: user.id,status:{'>':1}};
          if(req.query.todate && req.query.fromdate){
           let bookingtoDate = new Date(req.query.todate).toISOString();
           let bookingfromDate = new Date(req.query.fromdate).toISOString();
