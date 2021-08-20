@@ -24,7 +24,10 @@ module.exports = {
         expiresIn: sails.config.jwtExpires,
       });
       // set a cookie on the client side that they can't modify unless they sign out (just for web apps)
-      await Users.updateOne({ email: user.email }).set({ accessToken: token,token:req.body.token });
+      await Users.updateOne({ email: user.email }).set({
+        accessToken: token,
+        token: req.body.token,
+      });
 
       var data = {
         result: user,
@@ -114,9 +117,9 @@ module.exports = {
         });
       }
 
-      let setting = await Setting.findOne({userId:qrCode.userId});
+      let setting = await Setting.findOne({ userId: qrCode.userId });
 
-      if(!setting){
+      if (!setting) {
         return res.badRequest({
           status: false,
           msg: "Please add a setting First",
@@ -135,51 +138,104 @@ module.exports = {
       });
     }
   },
-  UserSupportRequest: async function (req,res){
-    try { 
-    const user = req.user;
-     let emailObj = {
-       name: user.firstname,
-       email:user.email,
-       subject:req.body.subject,
-       query:req.body.query
-     }
-    await Mailer.sendSupportMail(emailObj);
-    return res.ok({ status: true, msg: "Support Mail sent successfully", data:{}});
-  } catch (err) {
-    console.log(err);
-    return res.badRequest({
-      status: false,
-      msg: "Something went wrong !",
-      data: {},
-    });
-  }
+  UserSupportRequest: async function (req, res) {
+    try {
+      const user = req.user;
+      let emailObj = {
+        name: user.firstname,
+        email: user.email,
+        subject: req.body.subject,
+        query: req.body.query,
+      };
+      await Mailer.sendSupportMail(emailObj);
+      return res.ok({
+        status: true,
+        msg: "Support Mail sent successfully",
+        data: {},
+      });
+    } catch (err) {
+      console.log(err);
+      return res.badRequest({
+        status: false,
+        msg: "Something went wrong !",
+        data: {},
+      });
+    }
   },
-  UserReportData: async function(req,res){
-    try{
+  UserReportData: async function (req, res) {
+    try {
       const user = req.user;
       let financeData = [];
       let appointmentData = [];
-      let bookingRecord = await Booking.find({userId:user.id,status:2});
+      let bookingRecord = await Booking.find({ userId: user.id, status: 2 });
 
+      bookingRecord &&
+        bookingRecord.map((book) => {
+          const date = moment(book.bookingDateTime).format("DD-MM-YYYY");
+          const day = moment(book.bookingDateTime).day();
+          const month = moment(book.bookingDateTime).month();
 
-      bookingRecord && bookingRecord.map((book) => {
-         const date = moment(book.bookingDateTime).format('DD-MM-YYYY');
-         const day =  moment(book.bookingDateTime).day();
-         const month = moment(book.bookingDateTime).month();
-         financeData.push({date:date,day:sails.config.MOMENT_WEEK_DAYS[day],month:sails.config.MOMENT_MONTH[month],payment:book.fees});
-         appointmentData.push({date:date,day:sails.config.MOMENT_WEEK_DAYS[day],month:sails.config.MOMENT_MONTH[month],appointment:1});
+          financeData.push({
+            date: date,
+            day: sails.config.MOMENT_WEEK_DAYS[day],
+            month: sails.config.MOMENT_MONTH[month],
+            payment: book.fees,
+          });
+          appointmentData.push({
+            date: date,
+            day: sails.config.MOMENT_WEEK_DAYS[day],
+            month: sails.config.MOMENT_MONTH[month],
+            appointment: 1,
+          });
+        });
+
+      return res.ok({
+        status: true,
+        msg: "Reports Data",
+        data: { finance: financeData, appointment: appointmentData },
       });
+    } catch (err) {
+      console.log(err);
+      return res.badRequest({
+        status: false,
+        msg: "Something went wrong !",
+        data: {},
+      });
+    }
+  },
 
-      return res.ok({ status: true, msg: "Reports Data", data:{finance:financeData,appointment:appointmentData}});
+  sendReportMessage: async function(req,res){
+    try{
+        const user = req.user;
+        const searchToken = req.query.searchToken;
+
+        let bookingData = await Booking.findOne({userId:user.id,searchToken:searchToken});
+
+        if(!bookingData){
+
+        }
+
+        await sails.helpers.sendMessage.with({
+          messgaeType:'precription',
+          file: bookingData.file,
+          mobile: bookingData.customerInfo.mobile,
+        });
+
+        return res.ok({
+          status: true,
+          msg: "Prescription sent successfully!",
+          data: {},
+        });
+
+
 
     }catch(err){
-    console.log(err);
-    return res.badRequest({
-      status: false,
-      msg: "Something went wrong !",
-      data: {},
-    });
+      console.log(err);
+      return res.badRequest({
+        status: false,
+        msg: "Something went wrong !",
+        data: {},
+      });
     }
-  }
+    }
 };
