@@ -358,7 +358,7 @@ module.exports = {
   jwtExpires: 604800,
   RAZOR_KEY_ID: "rzp_test_Mj02y5458xshqx",
   RAZOR_SECRET_KEY: "tTmy6uCn0zlcRQM3nP7i2Fbd",
-  FRONT_END_URL: "https://qbook.vercel.app/",
+  FRONT_END_URL: "https://qbooks.in/",
   AWS_KEY_ID: "AKIAYNAENAA4PA2KUVGE",
   AWS_SECRET_KEY_ID: "vDxjR7Zd54/yLALRKeK+lkewSSQlAuM9Oiu9AUio",
   AWS_BUCKET: "qbook-patient-invoice",
