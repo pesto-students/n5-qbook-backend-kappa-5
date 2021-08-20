@@ -190,7 +190,7 @@ module.exports = {
         });
 
         let updateFinance = Object.values(financeData.reduce((obj, item) => {
-          var key = item.date + item.day
+          var key = item.date;
           if (!obj[key]) {
             obj[key] = Object.assign(item)
           } else {
@@ -200,7 +200,27 @@ module.exports = {
         }, {}));
 
         let updateAppointment = Object.values(appointmentData.reduce((obj, item) => {
-          var key = item.date + item.day
+          var key = item.date;
+          if (!obj[key]) {
+            obj[key] = Object.assign(item)
+          } else {
+            obj[key].appointment += item.appointment
+          }
+          return obj
+        }, {}));
+
+        let updateFinanceMonth = Object.values(financeData.reduce((obj, item) => {
+          var key = item.month;
+          if (!obj[key]) {
+            obj[key] = Object.assign(item)
+          } else {
+            obj[key].payment += item.payment
+          }
+          return obj
+        }, {}));
+
+        let updateAppointmentMonth = Object.values(appointmentData.reduce((obj, item) => {
+          var key = item.month;
           if (!obj[key]) {
             obj[key] = Object.assign(item)
           } else {
@@ -212,7 +232,7 @@ module.exports = {
       return res.ok({
         status: true,
         msg: "Reports Data",
-        data: { finance: updateFinance, appointment: updateAppointment },
+        data: { finance: updateFinance, appointment: updateAppointment,financeM:updateFinanceMonth,appointmentM:updateAppointmentMonth },
       });
     } catch (err) {
       console.log(err);

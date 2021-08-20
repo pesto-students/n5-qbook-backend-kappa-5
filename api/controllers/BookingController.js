@@ -297,13 +297,18 @@ module.exports = {
   BookingListing: async function (req, res) {
     try {
       const user = req.user;
-      let filter = {};
       let bookingList = [];
       const status = parseInt(req.query.status);
       if(status == 1){
          bookingList = await Booking.find({ status: status, userId: user.id });
       }else{
-         bookingList = await Booking.find({ userId: user.id });
+         let filter = {userId: user.id};
+         if(req.query.todate && req.query.fromdate){
+          let bookingtoDate = new Date(req.query.todate).toISOString();
+          let bookingfromDate = new Date(req.query.fromdate).toISOString();
+          filter['bookingDateTime'] = {'>=':bookingfromDate,'<=':bookingtoDate};
+         }
+         bookingList = await Booking.find(filter);
       }
       
       res.ok({
