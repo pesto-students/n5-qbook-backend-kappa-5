@@ -189,10 +189,30 @@ module.exports = {
           });
         });
 
+        let updateFinance = Object.values(financeData.reduce((obj, item) => {
+          var key = item.date + item.day
+          if (!obj[key]) {
+            obj[key] = Object.assign(item)
+          } else {
+            obj[key].payment += item.payment
+          }
+          return obj
+        }, {}));
+
+        let updateAppointment = Object.values(appointmentData.reduce((obj, item) => {
+          var key = item.date + item.day
+          if (!obj[key]) {
+            obj[key] = Object.assign(item)
+          } else {
+            obj[key].appointment += item.appointment
+          }
+          return obj
+        }, {}));
+
       return res.ok({
         status: true,
         msg: "Reports Data",
-        data: { finance: financeData, appointment: appointmentData },
+        data: { finance: updateFinance, appointment: updateAppointment },
       });
     } catch (err) {
       console.log(err);
