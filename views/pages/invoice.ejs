@@ -5,7 +5,7 @@
 
 body {
     font-family: 'Maven Pro', sans-serif;
-    background-color: #f12369
+    background-color: #475569
 }
 
 hr {
@@ -15,7 +15,7 @@ hr {
 }
 
 .add td {
-    color: #c5c4c4;
+    color: #090822;
     text-transform: uppercase;
     font-size: 12px
 }
@@ -36,8 +36,8 @@ hr {
                     <table class="table table-borderless">
                         <tbody>
                             <tr class="add">
-                                <td>To</td>
-                                <td>From</td>
+                                <td class="font-weight-bold">To</td>
+                                <td class="font-weight-bold">From</td>
                             </tr>
                             <tr class="content">
                                 <td class="font-weight-bold"><%= customer.name %> <br>Mob: <%= customer.mobileNum %> </td>
@@ -47,14 +47,18 @@ hr {
                     </table>
                 </div>
                 <hr>
+                <div class="p-2">
                 <h4>Diagnosis</h4>
-                <%= Diagnosis %>
+                 <%= Diagnosis %>
+                </div>
                 <hr>
+                <div class="p-2">
                 <h4>Prescription</h4>
                 <%= Prescription %>
+                </div>
                 <hr>
-                <h4>Payment</h4>
                 <div class="products p-2">
+                <h4>Payment</h4>
                     <table class="table table-borderless">
                         <tbody>
                             <tr class="add">
@@ -67,7 +71,7 @@ hr {
                                 <td><%= Mode %></td>
                                 <td>Rs. <%= Setting.fees %></td>
                                 <td></td>
-                                <td class="text-center">Rs.<%= Setting.fees %></td>
+                                <td class="text-center">Rs. <%= Setting.fees %></td>
                             </tr>
                         </tbody>
                     </table>
