@@ -189,45 +189,39 @@ module.exports = {
           });
         });
 
-        let updateFinance = Object.values(financeData.reduce((obj, item) => {
-          var key = item.date;
-          if (!obj[key]) {
-            obj[key] = Object.assign(item)
-          } else {
-            obj[key].payment += item.payment
-          }
-          return obj
-        }, {}));
+        let updateFinance = financeData.reduce(function(acc, obj) {
+          var key = obj.day;
+          acc[key] = (acc[key] || 0) + +obj.payment;
+          return acc;
+        }, Object.create(null));
 
-        let updateAppointment = Object.values(appointmentData.reduce((obj, item) => {
-          var key = item.date;
-          if (!obj[key]) {
-            obj[key] = Object.assign(item)
-          } else {
-            obj[key].appointment += item.appointment
-          }
-          return obj
-        }, {}));
 
-        let updateFinanceMonth = Object.values(financeData.reduce((obj, item) => {
-          var key = item.month;
-          if (!obj[key]) {
-            obj[key] = Object.assign(item)
-          } else {
-            obj[key].payment += item.payment
-          }
-          return obj
-        }, {}));
+        let updateAppointment = appointmentData.reduce(function(acc, obj) {
+          var key = obj.day;
+          acc[key] = (acc[key] || 0) + +obj.appointment;
+          return acc;
+        }, Object.create(null));
+       // console.log('appointmentData',appointmentData);
 
-        let updateAppointmentMonth = Object.values(appointmentData.reduce((obj, item) => {
-          var key = item.month;
-          if (!obj[key]) {
-            obj[key] = Object.assign(item)
-          } else {
-            obj[key].appointment += item.appointment
-          }
-          return obj
-        }, {}));
+        //console.log('financeData',financeData);
+
+        let updateFinanceMonth = financeData.reduce(function(acc, obj) {
+          var key = obj.month;
+          acc[key] = (acc[key] || 0) + +obj.payment;
+          return acc;
+        }, Object.create(null));
+
+
+        let updateAppointmentMonth = appointmentData.reduce(function(acc, obj) {
+          var key = obj.month;
+          acc[key] = (acc[key] || 0) + +obj.appointment;
+          return acc;
+        }, Object.create(null));
+
+       // console.log('updateFinance',updateFinance);
+
+        //console.log('updateAppointment',updateAppointment);
+
 
       return res.ok({
         status: true,
