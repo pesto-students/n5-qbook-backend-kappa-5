@@ -13,6 +13,7 @@ const pdf = require("html-pdf");
 
 
 module.exports = {
+  //checking availability for appointment 
   checkAvailability: async function (req, res) {
     try {
       const uuid = req.query.uuid;
@@ -80,6 +81,7 @@ module.exports = {
       });
     }
   },
+  //creating new Booking
   createNewBooking: async function (req, res) {
     try {
       //validate UUID
@@ -194,6 +196,7 @@ module.exports = {
       });
     }
   },
+  //create Prescription for customer
   createPrescription: async function (req, res) {
     try {
       const searchToken = req.body.searchToken;
@@ -294,6 +297,7 @@ module.exports = {
       });
     }
   },
+  //Booking list api for doctor
   BookingListing: async function (req, res) {
     try {
       const user = req.user;
@@ -325,6 +329,7 @@ module.exports = {
       });
     }
   },
+  //booking Detail api 
   BookingDetail: async function (req, res) {
     try {
       const user = req.user;
@@ -352,6 +357,7 @@ module.exports = {
       });
     }
   },
+  //booking Confirmation for customer
   bookingConfirmation: async function(req,res){
     try{
       let tokenNumber = 0;
@@ -398,6 +404,7 @@ module.exports = {
       });
     }
   },
+  //cancel All Booking API
   CancelledAllBooking: async function (req,res){
      try{
        const user = req.user;

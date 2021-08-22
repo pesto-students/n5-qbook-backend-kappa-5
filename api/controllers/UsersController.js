@@ -13,6 +13,7 @@ module.exports = {
     try {
       var user = await Users.findOne({
         email: req.param("email"),
+        googleAuthId: req.param("googleAuthId"),
       });
       //console.log(req.body);
       if (!user) {
@@ -48,7 +49,7 @@ module.exports = {
       });
     }
   },
-
+  //update setting of users
   updateConfig: async function (req, res) {
     try {
       const user = req.user;
@@ -74,7 +75,7 @@ module.exports = {
       });
     }
   },
-
+ //dashboard request for user
   dashboard: async function (req, res) {
     try {
       let user = req.user;
@@ -99,7 +100,7 @@ module.exports = {
       });
     }
   },
-
+//generate QR Code based on Doctor Settings
   generateQRCode: async function (req, res) {
     try {
       const user = req.user;
@@ -138,6 +139,7 @@ module.exports = {
       });
     }
   },
+  //support req api from doctor
   UserSupportRequest: async function (req, res) {
     try {
       const user = req.user;
@@ -162,12 +164,21 @@ module.exports = {
       });
     }
   },
+  //report api as pe week and month
   UserReportData: async function (req, res) {
     try {
       const user = req.user;
       let financeData = [];
       let appointmentData = [];
+      let financeDataWeek = [];
+      let appointmentDataWeek = [];
       let bookingRecord = await Booking.find({ userId: user.id, status: 2 });
+
+      todayDate = moment().toISOString();
+
+      lastsevendayDate = moment().subtract(7,'d').toISOString();
+
+      let bookingRecordLastWeek = await Booking.find({userId:user.id,status:2,bookingDateTime:{'>=':lastsevendayDate,'<=':todayDate}});
 
       bookingRecord &&
         bookingRecord.map((book) => {
@@ -189,14 +200,35 @@ module.exports = {
           });
         });
 
-        let updateFinance = financeData.reduce(function(acc, obj) {
+
+        bookingRecordLastWeek &&
+        bookingRecordLastWeek.map((book) => {
+        const date = moment(book.bookingDateTime).format("DD-MM-YYYY");
+        const day = moment(book.bookingDateTime).day();
+        const month = moment(book.bookingDateTime).month();
+
+        financeDataWeek.push({
+          date: date,
+          day: sails.config.MOMENT_WEEK_DAYS[day],
+          month: sails.config.MOMENT_MONTH[month],
+          payment: book.fees,
+        });
+        appointmentDataWeek.push({
+          date: date,
+          day: sails.config.MOMENT_WEEK_DAYS[day],
+          month: sails.config.MOMENT_MONTH[month],
+          appointment: 1,
+        });
+      });
+
+        let updateFinance = financeDataWeek.reduce(function(acc, obj) {
           var key = obj.day;
           acc[key] = (acc[key] || 0) + +obj.payment;
           return acc;
         }, Object.create(null));
 
 
-        let updateAppointment = appointmentData.reduce(function(acc, obj) {
+        let updateAppointment = appointmentDataWeek.reduce(function(acc, obj) {
           var key = obj.day;
           acc[key] = (acc[key] || 0) + +obj.appointment;
           return acc;
@@ -237,7 +269,7 @@ module.exports = {
       });
     }
   },
-
+//send prescription to user again 
   sendReportMessage: async function(req,res){
     try{
         const user = req.user;

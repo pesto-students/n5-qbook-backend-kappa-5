@@ -39,7 +39,7 @@ module.exports = {
   },
 
   fn: async function (inputs, exits) {
-    if (inputs.googleAuthId) {
+    if (inputs.googleAuthId && inputs.email) {
       var user = await Users.create(inputs)
         .intercept("E_UNIQUE", () => "emailAlreadyInUse")
         .intercept({ name: "UsageError" }, () => "invalid")
