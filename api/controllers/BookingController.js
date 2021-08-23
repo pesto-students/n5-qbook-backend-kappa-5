@@ -36,6 +36,8 @@ module.exports = {
       const format = "YYYY-MM-DD HH:mm";
       const currentDate = moment().format("YYYY-MM-DD");
       const currentTime = moment().format(format);
+      console.log('currentDate',currentDate);
+      console.log('currentTime',currentTime);
       let checktime = false;
       let finalCheck = false;
       let message = "";
@@ -46,6 +48,8 @@ module.exports = {
           message +=
             "Start Time:-" + slot.start + " End Time:-" + slot.end + " \n";
           checktime = moment(currentTime).isBetween(getStart, getEnd);
+          console.log('checktime',checktime);
+
           if (checktime) {
             finalCheck = true;
           }
