@@ -36,6 +36,8 @@ module.exports = {
       const format = "YYYY-MM-DD HH:mm";
       const currentDate = moment().utc().format("YYYY-MM-DD");
       const currentTime = moment().utc().format(format);
+
+      console.log('currentTime',currentTime);
       
       let checktime = false;
       let finalCheck = false;
@@ -45,6 +47,8 @@ module.exports = {
           let getStart = moment(currentDate + " " + slot.start).utc().format(format);
           let getEnd = moment(currentDate + " " + slot.end).utc().format(format);
 
+          console.log('getStart',getStart);
+          console.log('getEnd',getEnd);
 
           message +=
             "Start Time:-" + slot.start + " End Time:-" + slot.end + " \n";
