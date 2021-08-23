@@ -34,21 +34,22 @@ module.exports = {
       }
       const Config = await Setting.findOne({ userId: qrCode.userId });
       const format = "YYYY-MM-DD HH:mm";
-      const currentDate = moment().format("YYYY-MM-DD");
-      const currentTime = moment().format(format);
-      console.log('currentDate',currentDate);
-      console.log('currentTime',currentTime);
+      const currentDate = moment().utc().format("YYYY-MM-DD");
+      const currentTime = moment().utc().format(format);
+      
       let checktime = false;
       let finalCheck = false;
       let message = "";
       Config.slots &&
         Config.slots.map((slot) => {
-          let getStart = currentDate + " " + slot.start;
-          let getEnd = currentDate + " " + slot.end;
+          let getStart = moment(currentDate + " " + slot.start).utc().format(format);
+          let getEnd = moment(currentDate + " " + slot.end).utc().format(format);
+
+
           message +=
             "Start Time:-" + slot.start + " End Time:-" + slot.end + " \n";
           checktime = moment(currentTime).isBetween(getStart, getEnd);
-          console.log('checktime',checktime);
+          
 
           if (checktime) {
             finalCheck = true;
