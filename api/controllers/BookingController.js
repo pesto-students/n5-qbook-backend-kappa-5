@@ -244,7 +244,7 @@ module.exports = {
       let fileLoc = await sails.helpers.uploadFile.with({
         data: "./assets/uploads/generatedfile.pdf",
       });
-      fs.unlinkSync("./assets/uploads/generatedfile.pdf");
+      //fs.unlinkSync("./assets/uploads/generatedfile.pdf");
       let UpdateBooking = await Booking.updateOne({ id: BookingDetail.id }).set(
         {
           diagnosis: req.body.diagnosis,
