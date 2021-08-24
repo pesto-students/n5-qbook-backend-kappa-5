@@ -34,8 +34,8 @@ module.exports = {
       }
       const Config = await Setting.findOne({ userId: qrCode.userId });
       const format = "YYYY-MM-DD HH:mm";
-      const currentDate = moment().utc().format("YYYY-MM-DD");
-      const currentTime = moment().utc().format(format);
+      const currentDate = moment().utcOffset("+05:30").format("YYYY-MM-DD");
+      const currentTime = moment().utcOffset("+05:30").format(format);
 
       console.log('currentTime',currentTime);
       
@@ -44,8 +44,8 @@ module.exports = {
       let message = "";
       Config.slots &&
         Config.slots.map((slot) => {
-          let getStart = moment(currentDate + " " + slot.start).utc().format(format);
-          let getEnd = moment(currentDate + " " + slot.end).utc().format(format);
+          let getStart = moment(currentDate + " " + slot.start).format(format);
+          let getEnd = moment(currentDate + " " + slot.end).format(format);
 
           console.log('getStart',getStart);
           console.log('getEnd',getEnd);
@@ -74,7 +74,7 @@ module.exports = {
         });
       }
       const randomValue = Math.floor(Math.random() * 90000) + 10000;
-      const RazorPayOrderID = await sails.helpers.createOrder.with({amount:Config.fees,currency:'INR',receipt:'receipt#'+randomValue,notes:'Appointment'});
+      const RazorPayOrderID = await sails.helpers.createOrder.with({amount:parseInt(Config.fees)*100,currency:'INR',receipt:'receipt#'+randomValue,notes:'Appointment'});
       return res.ok({
         status: true,
         data: { orderId: RazorPayOrderID.id, fees: parseInt(Config.fees)*100 },
