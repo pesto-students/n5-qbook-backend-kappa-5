@@ -237,12 +237,12 @@ module.exports = {
       //console.log(ejsData);
       let finalresponse = await pdf
         .create(ejsData, options)
-        .toFile(path.resolve(__dirname,'./assets/uploads/generatedfile.pdf'), (err, response) => {
+        .toFile(path.resolve(sails.config.appPath,'./assets/uploads/generatedfile.pdf'), (err, response) => {
           if (err) return console.log(err);
           return response;
         });
       let fileLoc = await sails.helpers.uploadFile.with({
-        data: path.resolve(__dirname,'./assets/uploads/generatedfile.pdf'),
+        data: path.resolve(sails.config.appPath,'./assets/uploads/generatedfile.pdf'),
       });
       //fs.unlinkSync("./assets/uploads/generatedfile.pdf");
       let UpdateBooking = await Booking.updateOne({ id: BookingDetail.id }).set(
