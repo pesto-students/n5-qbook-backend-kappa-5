@@ -1,128 +1,138 @@
-READMINE: Suggested template for software READMEs
-=================================================
+# Qbook (QR Code Based Appointment System)
 
-This is an example README file demonstrating a suggested README file structure for software projects on GitHub.  You can copy this file into your project repository and edit the text as needed.
+QBook is designed for out-patient(OP) consultation at clinics. The app automates the queuing process between the doctor and the patients who are waiting for consultation. 
+During the tough times of COVID-19 pandemic, it's essential to maintain social distance and high safety standards. Inorder to overcome this challenge, we have designed an app where a patient can scan the QR code and book an appointment without the need to touch anything.
 
-[![License](https://img.shields.io/badge/License-CC0-lightgray.svg?style=flat-square)](https://creativecommons.org/publicdomain/zero/1.0/)
-[![Latest release](https://img.shields.io/github/v/release/mhucka/readmine.svg?style=flat-square&color=b44e88)](https://github.com/mhucka/readmine/releases)
-[![DOI](http://img.shields.io/badge/DOI-10.22002%20%2f%20D1.1967-blue.svg?style=flat-square)](https://data.caltech.edu/records/1967)
+Easy and hassle free booking system is provided where the user can easily authenticate using the mobile number with OTP verification and pay the required consultation fees online.The queue number will be displayed immediately in the confirmation page once the booking has been completed. 
 
 
-Table of contents
------------------
-
-* [Introduction](#introduction)
-* [Installation](#installation)
-* [Usage](#usage)
-* [Known issues and limitations](#known-issues-and-limitations)
-* [Getting help](#getting-help)
-* [Contributing](#contributing)
-* [License](#license)
-* [Authors and history](#authors-and-history)
-* [Acknowledgments](#acknowledgments)
-
-
-Introduction
-------------
-
-This single-file repository consists of a README file in Markdown format, and is meant to provide a template for README files as well an illustration of what the README file can be expected to look like.  The structure of this file is based on examining many examples and recommendations for README files, as well as this author's own experiences of creating many open-source projects and repositories over three decades.
-
-The [Introduction](#introduction) section &ndash; which you are presently reading &ndash; should provide background for your software project, a brief explanation of what the project is about, and optionally, pointers to resources that can help orient readers.  (Some README recommendations go straight to installation instructions as the first section, but in my opinion, introductions are important for readers who are not familiar with your technical area.)  Ideally, this section should be short.
+## Table of Contents
+- [Website](#website)
+- [Getting Started](#getting-started)
+	- [Prerequisites](#prerequisites)
+	- [Installation](#installation)
+- [Tech Stack](#tech-stack)
+	- [3rd Party Integration](#3rd-party-integration)
+- [Source Code](#source-code-repo)
+- [Resources](#resources)
+- [Developers](#developers)
+- [UI Screens](#ui-screens)
 
 
-Installation
-------------
+## website
 
-Begin this section by mentioning any prerequisites that may be important for users to have before they can use your software.  Examples include hardware and operating system requirements.
+Project Website: https://qbooks.in
 
-Next, provide step-by-step instructions for installing the software, preferably with command examples that can be copy-pasted by readers into their software environments. For example:
+## Getting Started
 
-```bash
-a command-line command here
-```
+To get a local copy up and running follow these simple steps.
 
-Sometimes, subsections may be needed for different operating systems or particularly complicated installations.
- 
+### Prerequisites
 
-Usage
------
+This is an example of how to list things you need to use the software and how to install them.
 
-This section explains the principles behind this README file.  If this repository were for actual _software_, this [Usage](#usage) section would explain more about how to run the software, what kind of output or behavior to expect, and so on.
+npm install npm@latest -g
 
-### Basic operation
+### Installation
 
-A suggested approach for using this example README file is as follows:
+Clone the repo
+- git clone https://github.com/pesto-students/n5-qbook-frontend-kappa-5/
 
-1. Copy the [source file](README.md) for this file to your repository and commit it to your version control system
-2. Delete all the body text but keep the section headings
-3. Write your README content
-4. Commit the new text to your version control system
-5. Update your README file as your software evolves
+Install NPM packages 
+- npm install
 
-The first paragraph in the README file (under the title at the very top) should summarize your software in a concise fashion, preferably using no more than one or two sentences.
+Run the frontend app
+- npm run start
 
-<p align="center"><img width="80%" src=".graphics/screenshot-top-paragraph.png"></p>
+Run the backend app
+sails lift
 
-The space under the first paragraph and _before_ the [Table of Contents](#table-of-contents) is a good location for optional [badges](https://github.com/badges/shields), which are small visual tokens commonly used on GitHub repositories to communicate project status, dependencies, versions, DOIs, and other information.  The particular badges and colors you use depend on your project and personal tastes.
+## Tech Stack
 
-The [Introduction](#introduction) and [Usage](#usage) sections are described above.
+- NextJS
+- Redux
+- Tailwind CSS
+- Mongo DB
+- NodeJS
 
-In the [Known issues and limitations](#known-issues) section, summarize any notable issues and/or limitations of your software.  The [Getting help](#getting-help) section should inform readers of how they can contact you, or at least, how they can report problems they may encounter.  The [Contributing](#contributing) section is optional; if your repository is for a project that accepts open-source contributions, then this section is where you can explain to readers how they can go about making contributions.
+## 3rd Party Integration
 
-The [License](#license) section should state any copyright asserted on the project materials as well as the terms of use of the software, files and other materials found in the project repository.  Finally, the [Authors and history](#authors-and-history) section should inform readers who the authors are; it is also a place where you can acknowledge other contributions to the work and the use of other people's software or tools.
+- Razor Pay
+- Vercel
+- Firebase
+- Twillio
+- AWS S3
 
-### Additional options
+## Source Code Repo
 
-Some projects need to communicate additional information to users and can benefit from additional sections in the README file.  It's difficult to give specific instructions &ndash; a lot depends on your software, your intended audience, etc.  Use your judgment and ask for feedback from users or colleagues to help figure out what else is worth explaining.
+- Front End - https://github.com/pesto-students/n5-qbook-frontend-kappa-5/
+- Back End  - https://github.com/pesto-students/n5-qbook-backend-kappa-5
 
+## Resources
 
-Known issues and limitations
-----------------------------
+- PRD
+- UX Wireframes
+- High Level Design
 
-In this section, summarize any notable issues and/or limitations of your software.  If none are known yet, this section can be omitted (and don't forget to remove the corresponding entry in the [Table of Contents](#table-of-contents) too); alternatively, you can leave this section in and write something along the lines of "none are known at this time".
+## Developers
 
+- Gaurav Tayal
+- Mounika D
+- Mohit Niwadunge
 
-Getting help
-------------
+## UI Screens
 
-Inform readers of how they can contact you, or at least how they can report problems they may encounter.  This may simply be a request to use the issue tracker on your repository, but many projects have associated chat or mailing lists, and this section is a good place to mention those.
+### Work Flow for Doctor
 
+The login page for the doctor where he can track the real time appointments. 
 
-Contributing
-------------
-
-Mention how people can offer contributions, and point them to your guidelines for contributing.
-
-
-License
--------
-
-This README file is distributed under the terms of the [Creative Commons 1.0 Universal license (CC0)](https://creativecommons.org/publicdomain/zero/1.0/).  The license applies to this file and other files in the [GitHub repository](http://github.com/mhucka/readmine) hosting this file. This does _not_ mean that you, as a user of this README file in your software project, must also use CC0 license!  You may use any license for your work that you see fit.
-
-
-Authors and history
----------------------------
-
-In this section, list the authors and contributors to your software project.  (The original author of this file is [Mike Hucka](http://www.cds.caltech.edu/~mhucka/).)  Adding additional notes here about the history of the project can make it more interesting and compelling.
+![image](https://user-images.githubusercontent.com/5499396/136135935-f1de749f-b205-44b9-b0ca-fd499604fb58.png)
 
 
-Acknowledgments
----------------
+The appointments tab where all the appointments are displayed. It includes the below features.
+	- Search the appointments by Name or phone number
+	- Settings where the doctor can toggle their availability.	
+	- Number of appointments
+	
+![image](https://user-images.githubusercontent.com/5499396/136136295-cf0f1426-f630-4680-8e82-a51fd822b817.png)
+![image](https://user-images.githubusercontent.com/5499396/136138188-277863e0-5c61-44a4-b3ec-69828307ad9b.png)
 
-If your work was funded by any organization or institution, acknowledge their support here.  In addition, if your work relies on other software libraries, or was inspired by looking at other work, it is appropriate to acknowledge this intellectual debt too.  For example, in the process of developing this file, I used not only my own ideas and experiences &ndash; I read many (sometimes contradictory) recommendations for README files and examined real READMEs in actual use, and tried to distill the best ideas into the result you see here.  Sources included the following:
+On clicking the start button next to the appointments, the consultation for that patient can be started. The doctor can enter the diagnosis and the prescription and on clicking the submit button, the current consultation is closed for that patient doctor is redirected to the appointments page so that they can proceed with the next appointments.
+![image](https://user-images.githubusercontent.com/5499396/136138314-2316e70d-cf21-408e-a1ac-eb6e4e0af357.png)
 
-* http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
-* https://changelog.com/posts/top-ten-reasons-why-i-wont-use-your-open-source-project
-* https://thoughtbot.com/blog/how-to-write-a-great-readme
-* http://jonathanpeelle.net/making-a-readme-file
-* https://github.com/noffle/art-of-readme
-* https://github.com/noffle/common-readme
-* https://github.com/RichardLitt/standard-readme
-* https://github.com/jehna/readme-best-practices
-* https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
-* https://github.com/matiassingers/awesome-readme
-* https://github.com/cfpb/open-source-project-template
-* https://github.com/davidbgk/open-source-template/
-* https://www.makeareadme.com
-* https://github.com/lappleapple/feedmereadmes
-* https://github.com/badges/shields
+
+The appointments history tab where the history of the consultations are displayed. It includes the below features.
+	- Search the appointments by Name or phone number
+	- Filter the appointments by date. 
+	- Send the Prescription action -> By clicking on this action, the prescription is sent to the mobile number of the patient via SMS.
+	- View Prescription action -> By clicking on this action, the prescription can be edited and saved.
+
+![image](https://user-images.githubusercontent.com/5499396/136136682-6723d1d4-de3e-4606-91d2-750d79844620.png)
+
+The setting tab allows the doctor to configure their personal details and the available timings so that patients can book the appointments.
+
+![image](https://user-images.githubusercontent.com/5499396/136136988-58972632-b311-4d4b-95cb-3f64d85d5505.png)
+
+The QR code tab provides a QR code to the patients to easily scan and book their appointments.
+
+![image](https://user-images.githubusercontent.com/5499396/136137099-559b4a0f-57b2-49b0-921b-26c2b4a3eb11.png)
+
+The reports tab provides a line graph and bar graph for tracking the finances and the appointments.
+
+![image](https://user-images.githubusercontent.com/5499396/136137216-5b2b7753-9d41-4c76-8f6c-d7678039e7fb.png)
+
+The support tab allows to send any query to the doctor. An automated email is triggerred when the send button is clicked.
+
+![image](https://user-images.githubusercontent.com/5499396/136137312-75f44a4e-5400-4e0b-9801-ca936771b52d.png)
+
+### Work Flow for Patient
+
+- Scan the QR code 
+- The below form will be opened where the patient can fill in their details and authenticate with phone number via OTP verification and click on Book Appointment.
+![image](https://user-images.githubusercontent.com/5499396/136137684-1fec903d-3801-482c-96c4-6c00b7dbeefa.png)
+- After validation, the patient can select to pay via cash or online. On selecting the online payment mode, the patient is redirected to razor pay screen where the patient can fill in the payment details and complete their transaction.
+- Once the appointment is confirmed, the patient is redirected to the confirmation page where details like the queue number and the expected waiting time will be displayed.
+
+![image](https://user-images.githubusercontent.com/5499396/136137854-4e21ed90-2570-4659-bf81-08c7cfce2ba0.png)
+
+
